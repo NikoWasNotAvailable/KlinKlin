@@ -1,0 +1,129 @@
+/* General reset */
+.app-container {
+  width: 100%;
+}
+
+/* Split top section */
+.split-section {
+  display: flex;
+  height: 100vh;
+}
+
+.left-container, .right-container {
+  flex: 1;
+}
+
+.left-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.left-container h1 {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: black;
+  font-weight: normal;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;  
+  gap: 1rem;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;           
+}
+
+.action-button {
+  background-color: white;
+  color: #29C75E;
+  border: 2px solid #29C75E;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #29C75E;
+  color: white;
+  border-color: #29C75E; /* Keeps it consistent on hover */
+}
+
+
+.right-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.main-image {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+}
+
+/* Our Service section */
+.service-section {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.service-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.service-items {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem; 
+  flex-wrap: wrap;
+}
+
+
+.service-item {
+  width: 200px;        
+  height: 200px;        
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.service-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.service-item p {
+  margin: 0;
+  font-weight: bold;
+}
+
+/* About Us section */
+.about-section {
+  padding: 4rem 2rem;
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.about-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
