@@ -1,0 +1,202 @@
+/* DONE VERSION */
+
+.app-container-laundry {
+    width: 100%;
+    color: black;
+}
+
+.split-section-laundry {
+    display: flex;
+    background-color: white;
+    padding: 2rem;
+    gap: 2rem;
+    flex-wrap: nowrap;
+    min-height: 100vh;
+    /* GANTI dari height: 100vh */
+    overflow: auto;
+    /* GANTI dari overflow: hidden */
+}
+
+
+.left-container-laundry,
+.right-container {
+    flex: 1;
+}
+
+.left-container-laundry {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    height: fit-content;
+}
+
+.right-container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    height: 100%;
+}
+
+.laundry-cards-wrapper {
+    overflow-y: auto;
+    flex-grow: 1;
+    max-height: calc(100vh - 4rem - 2rem);
+    /* viewport - h2 - padding */
+    padding-right: 0.5rem;
+    /* optional: spacing for scrollbar */
+}
+
+/* Pastikan height-nya tidak membuat terpotong */
+.right-container h2 {
+    flex-shrink: 0;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.laundry-scroll-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-top: 1rem;
+}
+
+.left-container-laundry h2,
+.right-container h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.left-container-laundry h2 {
+    margin-bottom: 2rem;
+}
+
+.left-container-laundry p {
+    padding: 1rem 4rem;
+}
+
+.left-container-laundry p span {
+    font-weight: bold;
+}
+
+.map-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.laundry-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .split-section-laundry {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .right-container {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .laundry-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+.laundry-card {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid black;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.laundry-card h3 {
+    font-weight: normal;
+}
+
+.laundry-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.laundry-card h3 {
+    font-weight: 500;
+}
+
+/* Our Service section */
+.service-section {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.service-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.service-items {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.service-item {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.service-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.service-item p {
+    margin: 0;
+    font-weight: bold;
+}
+
+/* About Us section */
+.about-section {
+    padding: 4rem 2rem;
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.about-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+}

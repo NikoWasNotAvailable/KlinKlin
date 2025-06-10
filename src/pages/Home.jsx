@@ -7,12 +7,12 @@ import cleanImg from '../assets/clean.png'
 import './Home.css'
 
 export default function Home() {
-    return (
+  return (
     <div className="app-container">
-      <div className="split-section">
-        <div className="left-container">
+      <div className="split-section-home">
+        <div className="left-container-home">
           <h1>
-            Cuci Bahan Sandangmu dengan KlinKlin
+            Clean Your Dirty Laundry With KlinKlin
           </h1>
           <div className="button-group">
             <button className="action-button">Place an Order</button>
@@ -56,4 +56,3 @@ export default function Home() {
     </div>
   )
 }
-  
