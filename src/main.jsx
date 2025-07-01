@@ -7,6 +7,8 @@ import Home from './pages/Home.jsx';
 import Laundry from './pages/Laundry.jsx';
 import Order from './pages/Order.jsx';
 import Login from './pages/Login.jsx';
+import Profile from './pages/Profile.jsx'
+import LaundryDetail from './pages/LaundryDetail.jsx'
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -24,6 +26,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </Route>
         <Route path="/order" element={<App />}>
           <Route index element={<Order />} />
+        </Route>
+        <Route path="/laundrydetail" element={<App />}>
+          <Route index element={<LaundryDetail />} />
+        </Route>
+        <Route path="/profile" element={<App />}>
+          <Route index element={<Profile />} />
         </Route>
         <Route path="/login" element={<Login />} />
       </Routes>

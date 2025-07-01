@@ -1,0 +1,105 @@
+.profile-container {
+    display: flex;
+    padding: 2rem;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.profile-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.profile-avatar-box {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.upload-btn {
+    margin-top: 1rem;
+    background-color: #2979ff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.social-links {
+    background: #fff;
+    padding: 1.2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.social-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+}
+
+.social-row i {
+    width: 20px;
+}
+
+.profile-right {
+    flex: 2;
+}
+
+.profile-info-box {
+    background: #f6f6f6;
+    padding: 2rem;
+    padding-bottom: 5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5rem;
+}
+
+.info-row label {
+    font-weight: bold;
+    color: #555;
+}
+
+.edit-btn {
+    margin-top: 2rem;
+    background-color: #2979ff;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.logout-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    float: right;
+    margin-top: 1rem;
+}

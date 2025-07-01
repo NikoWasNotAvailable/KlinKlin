@@ -1,147 +1,150 @@
 .login-container {
-    display: flex;
-    height: 100vh;
-    width: 100%;
-  }
-  
-  /* LEFT SIDE (brand + form) */
-  .login-left {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 2rem 4rem;
-    box-sizing: border-box;
-  }
-  
-  /* Brand logo section (top-left) */
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .logo-image {
-    height: 40px;
-    width: auto;
-    object-fit: contain;
-  }
-  
-  .brand-text {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  /* Form content */
-  .login-form {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 3rem;
-  }
-  
-  .login-form h1,
-  .login-form h2 {
-    margin: 0;
-    margin-bottom: 0.5rem;
-    /* text-align: left; */
-    line-height: 1.1;
-  }
-  
-  .login-form h2 {
-    font-weight: normal;
-  }
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
 
-  .form-element {
-    display: flex;
-    flex-direction: column; 
-    margin-top: 2rem;
-  }
+/* LEFT SIDE (brand + form) */
+.login-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 4rem;
+  box-sizing: border-box;
+}
 
-  .form-element input {
-    outline: 0;
-    border-width: 0 0 2px;
-    background-color: transparent;
-    margin-top:1rem;
-  }
+/* Brand logo section (top-left) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
 
-  .remember {
-    margin-top:1rem;
-    display: flex;
-    justify-content: space-between;
-  }
+.logo-image {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
 
-  .remember a{
-    color:black;
-    font-weight: normal;
-  }
-  .remember a:hover{
-    color:black;
-    text-decoration: underline;
-  }
+.brand-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
 
-  form button {
-    width:100%;
-    background-color: #A3BB8D;
-    color:white;
-    margin:1rem 0;
-  }
+/* Form content */
+.login-form {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem;
+}
 
-  form .or {
-    display: flex;
-    align-items: center;     
-    justify-content: center;  
-    gap: 1rem;                
-    margin-bottom: 1rem;
-  }
-  
-  form .or hr {
-    flex: 1;
-    height: 1px;
-    background-color: #ccc;
-    border: none;
-  }  
+.login-form h1,
+.login-form h2 {
+  margin: 0;
+  margin-bottom: 0.5rem;
+  /* text-align: left; */
+  line-height: 1.1;
+}
 
-  form .social-login {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 1rem;
-  }
+.login-form h2 {
+  font-weight: normal;
+}
 
-  .social-button {
-    background-color: #BED7A7;
-    border-radius: 2px;
-    width: 36px;
-    height: 36px;
-  
-    display: flex;                
-    align-items: center;        
-    justify-content: center;     
-  }
-  
-  .provider-icon {
-    width: 20px;          
-    height: 20px;
-    object-fit: contain;     
-  }
+.form-element {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
 
-  form span a {
-    color: #A3BB8D;
-  }
+.form-element input {
+  outline: 0;
+  border-width: 0 0 2px;
+  background-color: transparent;
+  margin-top: 1rem;
+}
 
-  form span a:hover {
-    color: #A3BB8D;
-    text-decoration: underline;
-  }
-  
-  /* RIGHT SIDE (image) */
-  .login-image {
-    flex: 1;
-    background-image: url('../assets/login-bg.png');
-    background-size: cover;
-    background-position: center right;
-    background-repeat: no-repeat;
-  }
+.remember {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
 
-  
+.remember a {
+  color: black;
+  font-weight: normal;
+}
+
+.remember a:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+form button {
+  width: 100%;
+  background-color: #A3BB8D;
+  color: white;
+  margin: 1rem 0;
+}
+
+form .or {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+form .or hr {
+  flex: 1;
+  height: 1px;
+  background-color: #ccc;
+  border: none;
+}
+
+form .social-login {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+.social-button {
+  background-color: #BED7A7;
+  border-radius: 2px;
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.provider-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+form span a {
+  color: #A3BB8D;
+}
+
+form span a:hover {
+  color: #A3BB8D;
+  text-decoration: underline;
+}
+
+/* RIGHT SIDE (image) */
+.login-image {
+  flex: 1;
+  background-image: url('../assets/login-bg.png');
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+}
+
+input {
+  color: black;
+}

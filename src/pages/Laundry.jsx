@@ -1,14 +1,20 @@
-import klinKlinImage from '../assets/home.png'
-import image1 from '../assets/image1.jpg'
-import image2 from '../assets/image2.jpg'
-import image3 from '../assets/image3.jpg'
-import image4 from '../assets/image4.jpg'
-import image5 from '../assets/Image5.jpg'
-import image6 from '../assets/Image6.jpg'
-
-import './Laundry.css'
+import { useNavigate } from 'react-router-dom';
+import klinKlinImage from '../assets/home.png';
+import image1 from '../assets/image1.jpg';
+import image2 from '../assets/image2.jpg';
+import image3 from '../assets/image3.jpg';
+import image4 from '../assets/image4.jpg';
+import image5 from '../assets/Image5.jpg';
+import image6 from '../assets/Image6.jpg';
+import './Laundry.css';
 
 export default function Laundry() {
+  const navigate = useNavigate();
+
+  const handleCardClick = (id) => {
+    navigate('/laundrydetail'); // you can add `?id=${id}` if dynamic detail is needed later
+  };
+
   return (
     <div className="app-container-laundry">
       <div className="split-section-laundry">
@@ -26,7 +32,8 @@ export default function Laundry() {
             ></iframe>
           </div>
           <p>
-            <span>Alamat:</span>  Jl. Lorem ipsum dolor sit amet consectetur, RT 06 RW 12,  Kelurahan Bojong Gede, Kecamatan Lamping, Kota Jakarta Barat, Indonesia
+            <span>Alamat:</span> Jl. Lorem ipsum dolor sit amet consectetur, RT 06 RW 12,
+            Kelurahan Bojong Gede, Kecamatan Lamping, Kota Jakarta Barat, Indonesia
           </p>
         </div>
 
@@ -35,7 +42,12 @@ export default function Laundry() {
           <div className="laundry-cards-wrapper">
             <div className="laundry-cards">
               {laundryPlaces.map((place) => (
-                <div className="laundry-card" key={place.id}>
+                <div
+                  className="laundry-card"
+                  key={place.id}
+                  onClick={() => handleCardClick(place.id)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <img src={place.image} alt={place.name} />
                   <h3>{place.name}</h3>
                   <p>{place.description}</p>
@@ -45,11 +57,11 @@ export default function Laundry() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
-  )
+  );
 }
+
 
 const laundryPlaces = [
   {
