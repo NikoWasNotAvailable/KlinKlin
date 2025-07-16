@@ -12,7 +12,7 @@ export default function Laundry() {
   const navigate = useNavigate();
 
   const handleCardClick = (id) => {
-    navigate('/laundrydetail'); // you can add `?id=${id}` if dynamic detail is needed later
+    navigate('/laundrydetail'); 
   };
 
   return (

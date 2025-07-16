@@ -1,132 +1,145 @@
-/* General reset */
-.app-container {
-    width: 100%;
+.order-page {
+    background: white;
+    padding: 50px 60px;
+    font-family: Arial, sans-serif;
+    color: #222;
 }
 
-/* Split top section */
-.split-section-order {
+.order-page {
+    padding: 2rem;
+    font-family: sans-serif;
+}
+
+.breadcrumbs {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: gray;
+}
+
+.order-container {
     display: flex;
-    height: 100vh;
-    background-color: #f4ffea;
+    justify-content: space-between;
+    gap: 2rem;
 }
 
-.left-container,
-.right-container {
+.order-left,
+.order-right {
     flex: 1;
-}
-
-.left-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-}
-
-.left-container h1 {
-    font-size: 3rem;
-    text-align: center;
-    margin-bottom: 2rem;
-    color: black;
-    font-weight: normal;
-}
-
-.button-group {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.action-button {
-    background-color: white;
-    color: #29C75E;
-    border: 2px solid #29C75E;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
+    background: #fff;
+    padding: 1.5rem;
     border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
 }
 
-.action-button:hover {
-    background-color: #29C75E;
-    color: white;
-    border-color: #29C75E;
-    /* Keeps it consistent on hover */
-}
-
-
-.right-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-}
-
-.main-image {
-    max-width: 80%;
-    max-height: 80%;
-    object-fit: contain;
-}
-
-/* Our Service section */
-.service-section {
-    padding: 4rem 2rem;
-    text-align: center;
-}
-
-.service-section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-}
-
-.service-items {
-    display: flex;
-    justify-content: center;
-    gap: 2.5rem;
-    flex-wrap: wrap;
-}
-
-
-.service-item {
-    width: 200px;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.service-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
+.order-left h3,
+.order-right h3 {
+    margin-top: 1rem;
     margin-bottom: 0.5rem;
 }
 
-.service-item p {
-    margin: 0;
-    font-weight: bold;
+textarea.text-box {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 1rem;
+    resize: none;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
 
-/* About Us section */
-.about-section {
-    padding: 4rem 2rem;
-    text-align: left;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.about-section h2 {
-    font-size: 2rem;
+.upload-box input[type=file] {
     margin-bottom: 1rem;
 }
 
-.about-section p {
+.tipe-jasa {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.jasa-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.jasa-card:hover {
+    background-color: #f7f7f7;
+}
+
+.layanan-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.estimasi {
+    background: #f1f1f1;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.btn-bayar {
+    background-color: #ccc;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* === Style untuk Radio & Checkbox === */
+input[type="radio"],
+input[type="checkbox"],
+input[type="number"] {
+    accent-color: white;
+    background-color: white;
+}
+
+input[type="radio"]:checked,
+input[type="checkbox"]:checked,
+input[type="number"] {
+    accent-color: black;
+}
+
+
+/* === Style untuk Textarea === */
+textarea.text-box {
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+}
+
+input[type="date"],
+input[type="time"] {
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    border-radius: 6px;
+    width: 100%;
+}
+
+.btn-bayar {
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    background-color: black;
+    color: white;
     font-size: 1rem;
-    line-height: 1.6;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-bayar:hover {
+    background-color: #333;
 }

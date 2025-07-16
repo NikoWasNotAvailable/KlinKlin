@@ -1,4 +1,5 @@
 import './LaundryDetail.css';
+import { useNavigate } from 'react-router-dom';
 import laundryImg from '../assets/image1.jpg';
 import laundryImg2 from '../assets/image2.jpg';
 import laundryImg3 from '../assets/image3.jpg';
@@ -23,7 +24,11 @@ export default function LaundryDetail() {
         { image: laundryImg4, name: 'Laundry Slipi' },
         { image: laundryImg5, name: 'Laundry Rompas' },
     ];
+    const navigate = useNavigate();
 
+    const handleOrderClick = (id) => {
+        navigate('/order'); 
+    };
     return (
         <div className="laundry-detail">
             <div className="top-content">
@@ -35,7 +40,7 @@ export default function LaundryDetail() {
                     <div className="stars">
                         ⭐⭐⭐⭐⭐ <span className="rating-text">5.0 | Lihat 136 Ulasan</span>
                     </div>
-                    <button className="order-button">Pesan Sekarang</button>
+                    <button className="order-button" onClick={handleOrderClick}>Pesan Sekarang</button>
                     <div className="map-box">
                         <div className="map-img">
                             <iframe

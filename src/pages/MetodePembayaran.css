@@ -1,0 +1,169 @@
+.metode-page {
+    background-color: #fdfdfd;
+    padding: 2rem;
+    font-family: 'Arial', sans-serif;
+    color: black;
+}
+
+.back-button {
+    background-color: #dce3ce;
+    width: 45px;
+    height: 45px;
+    border: 1px solid black;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    /* horizontal center */
+    align-items: center;
+    /* vertical center */
+    color: black;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 2rem;
+}
+
+.metode-container {
+    display: flex;
+    gap: 2rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+}
+
+.left-side {
+    flex: 2;
+}
+
+.right-side {
+    flex: 1;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.method-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.method-item label {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sub-options {
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sub-options img {
+    margin-right: 5px;
+}
+
+.card-section {
+    margin-top: 2rem;
+}
+
+.card-section label {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.card-section input[type="text"] {
+    width: 100%;
+    padding: 0.6rem 0;
+    padding-left: 0.6rem;
+    margin-right: -1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-top: 4px;
+}
+
+.form-row {
+    display: flex;
+    gap: 2rem;
+}
+
+.form-row label {
+    flex: 1;
+}
+
+.form-row input[type="text"] {
+    width: 100%;
+    /* pastikan input mengisi kolom sepenuhnya */
+}
+
+
+.cvv-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.save-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.green-box {
+    height: 60px;
+    background-color: #c8f3c3;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.summary-service-box {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.summary-service-box .header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.summary-service-box .desc {
+    font-size: 13px;
+    color: #555;
+    margin-top: 0.5rem;
+}
+
+.pricing p {
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 0;
+}
+
+back-button span {
+    transform: translateY(-2px);
+    color: black !important;
+}
+
+/* === Style untuk Radio & Checkbox === */
+input[type="radio"],
+input[type="checkbox"],
+input[type="text"] {
+    accent-color: white;
+    background-color: white;
+}
+
+input[type="radio"]:checked,
+input[type="checkbox"]:checked,
+input[type="text"] {
+    accent-color: black;
+}

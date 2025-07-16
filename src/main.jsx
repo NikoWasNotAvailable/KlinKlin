@@ -9,6 +9,7 @@ import Order from './pages/Order.jsx';
 import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx'
 import LaundryDetail from './pages/LaundryDetail.jsx'
+import MetodePembayaran from './pages/MetodePembayaran.jsx'
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -26,6 +27,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </Route>
         <Route path="/order" element={<App />}>
           <Route index element={<Order />} />
+        </Route>
+        <Route path="/metodepembayaran" element={<App />}>
+          <Route index element={<MetodePembayaran />} />
         </Route>
         <Route path="/laundrydetail" element={<App />}>
           <Route index element={<LaundryDetail />} />
