@@ -1,5 +1,7 @@
 const mysql = require('mysql2/promise');
-const JWT_SECRET = 'your_secret_key'; // use env var in production
+const JWT_SECRET = 'your_secret_key';
+
+let pool;
 
 async function createDatabaseIfNotExists() {
   const connection = await mysql.createConnection({
@@ -11,7 +13,6 @@ async function createDatabaseIfNotExists() {
   await connection.end();
 }
 
-let pool;
 async function initPoolAndTables() {
   await createDatabaseIfNotExists();
 
@@ -75,6 +76,11 @@ async function initPoolAndTables() {
   }
 }
 
-initPoolAndTables().catch(console.error());
+function getPool() {
+  if (!pool) {
+    throw new Error("Pool is not initialized. Did you forget to call initPoolAndTables()?");
+  }
+  return pool;
+}
 
-module.exports = { pool, JWT_SECRET };
+module.exports = { getPool, JWT_SECRET, initPoolAndTables };

@@ -1,11 +1,12 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
-const { pool, JWT_SECRET } = require('../utils/db');
+const { getPool, JWT_SECRET } = require('../utils/db');
 
 // REGISTER
 router.post('/register', async (req, res) => {
   const { username, password, role } = req.body;
+  const pool = getPool();
   try {
     const [existing] = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
     if (existing.length > 0) return res.status(400).json({ message: 'Username already exists' });
@@ -19,6 +20,7 @@ router.post('/register', async (req, res) => {
 
 // LOGIN
 router.post('/login', async (req, res) => {
+  const pool = getPool();
   const { username, password } = req.body;
   try {
     const [rows] = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
@@ -41,6 +43,7 @@ router.get('/profile', async (req, res) => {
   const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
+    const pool = getPool();
     const [rows] = await pool.query(
       `SELECT username, first_name, last_name, phone, address, dob, email, instagram, twitter, facebook, role
        FROM users WHERE id = ?`, [decoded.userId]
