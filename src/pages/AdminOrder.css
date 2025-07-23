@@ -1,0 +1,112 @@
+.admin-orders-page {
+    background-color: #fff;
+    padding: 2rem;
+    font-family: 'Arial', sans-serif;
+    color: #222;
+    min-height: 100vh;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #00cc66;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.order-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    background-color: #f9f9f9;
+}
+
+.order-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.order-user img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.service-type {
+    font-size: 0.9rem;
+    color: gray;
+}
+
+.order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+    flex: 1;
+}
+
+.send-driver-btn {
+    padding: 0.7rem 1.5rem;
+    font-weight: bold;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.send-driver-btn:hover {
+    background-color: black;
+    color: white;
+}
+
+.order-info-row {
+    display: flex;
+    justify-content: flex-start;
+    /* rata kiri */
+    gap: 40px;
+    margin: 10px 0;
+    padding-left: 10px;
+}
+
+.order-info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* konten rata kiri */
+    min-width: 150px;
+    /* agar tidak terlalu sempit */
+}

@@ -5,11 +5,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App.jsx';
 import Home from './pages/Home.jsx';
 import Laundry from './pages/Laundry.jsx';
-import Order from './pages/Order.jsx';
 import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx'
 import LaundryDetail from './pages/LaundryDetail.jsx'
 import MetodePembayaran from './pages/MetodePembayaran.jsx'
+import OrderRoute from './pages/OrderRoute.jsx'
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route index element={<Laundry />} />
         </Route>
         <Route path="/order" element={<App />}>
-          <Route index element={<Order />} />
+          <Route index element={<OrderRoute />} />
         </Route>
         <Route path="/metodepembayaran" element={<App />}>
           <Route index element={<MetodePembayaran />} />

@@ -5,6 +5,7 @@ const app = express();
 const { initPoolAndTables } = require('./utils/db'); // Import fungsi init
 const userRoutes = require('./routes/userRoutes');
 const laundryRoutes = require('./routes/laundryRoutes');
+const orderRoutes = require('./routes/orderRoutes')
 
 app.use(cors());
 app.use(express.json());
@@ -24,6 +25,7 @@ app.get('/api', (req, res) => {
 
 app.use('/api/users', userRoutes);
 app.use('/api/laundries', laundryRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Start server only after DB is ready
 initPoolAndTables().then(() => {

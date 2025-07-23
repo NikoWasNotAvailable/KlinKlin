@@ -3,24 +3,21 @@ import './Order.css';
 import { useNavigate } from 'react-router-dom';
 
 const OrderPage = () => {
-  const [jenisLayanan, setJenisLayanan] = useState('');
+  const navigate = useNavigate();
+  const [jenisLayanan, setJenisLayanan] = useState({
+    kiloan: false,
+    satuan: false
+  });
   const [tipeJasa, setTipeJasa] = useState('');
+  const [layananDipilih, setLayananDipilih] = useState([]);
   const [tanggal, setTanggal] = useState('');
   const [jam, setJam] = useState('');
-  const [layananDipilih, setLayananDipilih] = useState([]);
-  const [beratKg, setBeratKg] = useState(0); // ✅ Move this up
 
   const jasaOptions = {
-    reguler: { label: 'Jasa Cuci Reguler', biaya: 20000 },
+    reguler: { label: 'Jasa Cuci Reguler', biaya: 30000 },
     dryclean: { label: 'Jasa Dry Cleaning', biaya: 30000 },
-    setrika: { label: 'Jasa Setrika', biaya: 25000 },
+    setrika: { label: 'Jasa Setrika', biaya: 30000 },
   };
-
-  const biayaJasa = tipeJasa ? jasaOptions[tipeJasa].biaya : 0;
-  const biayaPerKg = 9000;
-  const biayaLaundry = beratKg * biayaPerKg;
-  const totalBiaya = biayaJasa + biayaLaundry;
-
 
   const layananList = [
     "Jas Kerja / Kuliah", "Selimut Besar", "Selimut Sedang", "Selimut Kecil",
@@ -28,7 +25,15 @@ const OrderPage = () => {
     "Karpet Besar", "Karpet Sedang", "Karpet Kecil"
   ];
 
-
+  const toggleJenis = (type) => {
+    if (type === 'kiloan') {
+      setJenisLayanan({ kiloan: true, satuan: false });
+      setLayananDipilih([]);
+    } else if (type === 'satuan') {
+      setJenisLayanan({ kiloan: false, satuan: true });
+      setTipeJasa('');
+    }
+  };
 
   const toggleLayanan = (nama) => {
     if (layananDipilih.includes(nama)) {
@@ -38,102 +43,91 @@ const OrderPage = () => {
     }
   };
 
-  const navigate = useNavigate();
-
-  const handleMetodePembayaran = () => {
+  const handleOrder = () => {
     navigate('/metodepembayaran');
   };
-
-
 
   return (
     <div className="order-page">
       <div className="breadcrumbs">Laundry &gt; Tempat Laundry &gt; Booking</div>
 
-      <div className="order-container">
-        {/* KIRI */}
-        <div className="order-left">
-          <h3>Pilih Jenis Layanan</h3>
+      <div className="order-layout">
+        {/* Left: Cuci Kiloan */}
+        <div className="order-section">
           <label>
             <input
               type="radio"
-              name="jenis"
-              value="satuan"
-              checked={jenisLayanan === 'satuan'}
-              onChange={e => setJenisLayanan(e.target.value)}
-            /> Cuci Satuan
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="jenis"
-              value="kiloan"
-              checked={jenisLayanan === 'kiloan'}
-              onChange={e => setJenisLayanan(e.target.value)}
+              checked={jenisLayanan.kiloan}
+              onChange={() => toggleJenis('kiloan')}
             /> Cuci Kiloan
           </label>
-          <h3>Berat Cucian (kg)</h3>
-          <input
-            type="number"
-            min="0"
-            className="text-box"
-            placeholder="Masukkan berat cucian dalam kg"
-            value={beratKg}
-            onChange={e => setBeratKg(Number(e.target.value))}
-          />
 
-          <h3>Pilih Tipe Jasa</h3>
-          <div className="tipe-jasa">
-            {Object.entries(jasaOptions).map(([key, jasa]) => (
-              <label className="jasa-card" key={key}>
-                <input
-                  type="radio"
-                  name="jasa"
-                  value={key}
-                  checked={tipeJasa === key}
-                  onChange={e => setTipeJasa(e.target.value)}
-                />
-                <div>
-                  <h4>{jasa.label}</h4>
-                  <p>Rp. {jasa.biaya.toLocaleString('id-ID')}</p>
-                </div>
-              </label>
-            ))}
-          </div>
-
+          {jenisLayanan.kiloan && (
+            <>
+              <h4>Pilih Tipe Jasa</h4>
+              <div className="tipe-jasa">
+                {Object.entries(jasaOptions).map(([key, jasa]) => (
+                  <label className="jasa-card" key={key}>
+                    <input
+                      type="radio"
+                      name="tipeJasa"
+                      value={key}
+                      checked={tipeJasa === key}
+                      onChange={(e) => setTipeJasa(e.target.value)}
+                    />
+                    <div>
+                      <div className="jasa-title">{jasa.label}</div>
+                      <div className="jasa-harga">Rp. {jasa.biaya.toLocaleString('id-ID')}</div>
+                    </div>
+                  </label>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
-        {/* KANAN */}
-        <div className="order-right">
-          <h3>Pilih Layanan Satuan</h3>
-          <div className="layanan-list">
-            {layananList.map((item, i) => (
-              <label key={i}>
-                <input
-                  type="checkbox"
-                  checked={layananDipilih.includes(item)}
-                  onChange={() => toggleLayanan(item)}
-                /> {item}
-              </label>
-            ))}
-          </div>
+        {/* Right: Cuci Satuan */}
+        <div className="order-section">
+          <label>
+            <input
+              type="radio"
+              checked={jenisLayanan.satuan}
+              onChange={() => toggleJenis('satuan')}
+            /> Cuci Satuan
+          </label>
 
-          <h3>Pilih Tanggal Penjemputan</h3>
+          {jenisLayanan.satuan && (
+            <>
+              <h4>Pilih Layanan Satuan</h4>
+              <div className="layanan-list">
+                {layananList.map((item, i) => (
+                  <label key={i}>
+                    <input
+                      type="checkbox"
+                      checked={layananDipilih.includes(item)}
+                      onChange={() => toggleLayanan(item)}
+                    /> {item}
+                  </label>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Bottom: Waktu dan Order Button */}
+      <div className="order-bottom">
+        <div className="form-group">
+          <label>Pilih Tanggal Penjemputan</label>
           <input type="date" value={tanggal} onChange={e => setTanggal(e.target.value)} />
-
-          <h3>Pilih Jam Penjemputan</h3>
-          <input type="time" value={jam} onChange={e => setJam(e.target.value)} />
-
-          <h3>Estimasi Biaya</h3>
-          <div className="estimasi">
-            <p>Biaya Jemput: Rp. {biayaJasa.toLocaleString('id-ID')},00</p>
-            <p>Biaya Cuci ({beratKg} kg): Rp. {biayaLaundry.toLocaleString('id-ID')},00</p>
-            <p><strong>Total Biaya: Rp. {totalBiaya.toLocaleString('id-ID')},00</strong></p>
-          </div>
-
-
-          <button className="btn-bayar" onClick={handleMetodePembayaran}>Pilih Metode Pembayaran</button>
         </div>
+
+        <div className="form-group">
+          <label>Pilih Jam Penjemputan</label>
+          <input type="time" value={jam} onChange={e => setJam(e.target.value)} />
+        </div>
+
+        <button className="btn-order" onClick={handleOrder}>Order</button>
       </div>
     </div>
   );
