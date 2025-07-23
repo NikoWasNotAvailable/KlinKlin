@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './Order.css';
+import './OrderLaundry.css';
 import { useNavigate } from 'react-router-dom';
 
-const OrderPage = () => {
+const OrderLaundry = () => {
   const navigate = useNavigate();
   const [jenisLayanan, setJenisLayanan] = useState({
     kiloan: false,
@@ -133,4 +133,4 @@ const OrderPage = () => {
   );
 };
 
-export default OrderPage;
+export default OrderLaundry;

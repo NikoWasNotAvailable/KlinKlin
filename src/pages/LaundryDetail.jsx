@@ -27,7 +27,7 @@ export default function LaundryDetail() {
     const navigate = useNavigate();
 
     const handleOrderClick = (id) => {
-        navigate('/order'); 
+        navigate('/orderlaundry');
     };
     return (
         <div className="laundry-detail">
