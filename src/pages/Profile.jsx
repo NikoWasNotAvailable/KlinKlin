@@ -14,7 +14,7 @@ export default function Profile() {
             return;
         }
 
-        fetch('http://localhost:3000/api/auth/profile', {
+        fetch('http://localhost:3000/api/users/profile', {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
