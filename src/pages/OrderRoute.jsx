@@ -1,8 +1,8 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import CustomerOrder from './Order';
+import CustomerOrder from './CustomerOrder';
 import AdminOrderPage from './AdminOrder';
-import OwnerOrderPage from './AdminOrder';
+import OwnerOrderPage from './OwnerOrder';
 import { jwtDecode } from 'jwt-decode';
 
 const OrderRoute = () => {

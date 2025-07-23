@@ -1,56 +1,42 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './AdminOrder.css';
 
-const AdminOrderPage = () => {
+const CustomerOrder = () => {
     const [orders, setOrders] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const res = await fetch('http://localhost:3000/api/orders?status=pending');
+                const res = await fetch('http://localhost:3000/api/orders?user=me');
                 const data = await res.json();
                 setOrders(data);
-                console.log('Fetched orders:', data);
+                console.log('Fetched customer orders:', data);
             } catch (err) {
-                console.error('Error fetching orders:', err);
+                console.error('Error fetching customer orders:', err);
             }
         };
 
         fetchOrders();
     }, []);
 
-
-    const handleSendDriver = async (orderId) => {
-        try {
-            await fetch(`http://localhost:3000/api/orders/${orderId}/assign-driver`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            setOrders((prev) =>
-                prev.map((order) =>
-                    order.id === orderId ? { ...order, status: 'driver_assigned' } : order
-                )
-            );
-        } catch (err) {
-            console.error('Failed to assign driver:', err);
-        }
+    const handleGoToPayment = (orderId) => {
+        navigate(`/payment/${orderId}`);
     };
 
     return (
         <div className="admin-orders-page">
             <div className="orders-list">
                 {orders.length === 0 ? (
-                    <p>No pending orders</p>
+                    <p>You have no orders yet</p>
                 ) : (
                     orders.map((order) => (
                         <div key={order.id} className="order-card">
                             <div className="order-user">
                                 <img src="/avatar-customer.png" alt="User" />
                                 <div>
-                                    <div className="name">
-                                        {order.customer_first_name || 'Unknown'} {order.customer_last_name || ''}
-                                    </div>
+                                    <div className="name">Order #{order.id}</div>
                                     <div className="service-type">
                                         {order.type === 'kiloan' ? 'Jasa Cuci Reguler' : 'Jasa Cuci Satuan'}
                                     </div>
@@ -59,21 +45,21 @@ const AdminOrderPage = () => {
 
                             <div className="order-info-row">
                                 <div className="order-info-item">
-                                    <strong>Address</strong>
-                                    <div>{order.customer_address || 'No Address'}</div>
+                                    <strong>Status</strong>
+                                    <div>{order.status}</div>
                                 </div>
                                 <div className="order-info-item">
-                                    <strong>Time</strong>
-                                    <div>{new Date(order.pickup_datetime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                                    <strong>Harga</strong>
+                                    <div>{order.total_price ? `Rp${order.total_price}` : '-'}</div>
                                 </div>
                             </div>
 
                             <button
                                 className="send-driver-btn"
-                                onClick={() => handleSendDriver(order.id)}
-                                disabled={order.status !== 'pending'}
+                                onClick={() => handleGoToPayment(order.id)}
+                                disabled={order.status !== 'received'}
                             >
-                                Send Driver
+                                Go to Payment
                             </button>
                         </div>
                     ))
@@ -83,4 +69,4 @@ const AdminOrderPage = () => {
     );
 };
 
-export default AdminOrderPage;
+export default CustomerOrder;
