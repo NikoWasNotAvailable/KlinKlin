@@ -16,7 +16,6 @@ function authenticateToken(req, res, next) {
 }
 
 // ========== GET Orders ==========
-// GET /api/orders?status=pending (Admin) OR /api/orders?status=driver_assigned (Owner) OR /api/orders?user=me (Customer)
 router.get('/', authenticateToken, async (req, res) => {
     const pool = getPool();
     const { status, user } = req.query;
@@ -29,20 +28,20 @@ router.get('/', authenticateToken, async (req, res) => {
                  FROM orders o
                  JOIN laundry_places lp ON o.laundry_place_id = lp.id
                  WHERE o.customer_id = ?`,
-                [req.user.id]
+                [req.user.userId]
             );
             return res.json(orders);
         }
 
-        if (req.user.role === 'owner' && status === 'driver_assigned') {
-            // OWNER VIEW
+        if (req.user.role === 'laundry_owner') {
+            // OWNER VIEW: all ongoing orders
             const [orders] = await pool.query(
                 `SELECT o.*, u.first_name AS customer_first_name, u.last_name AS customer_last_name, u.address AS customer_address
                  FROM orders o
                  JOIN users u ON o.customer_id = u.id
                  JOIN laundry_places lp ON o.laundry_place_id = lp.id
-                 WHERE o.status = ? AND lp.owner_id = ?`,
-                ['driver_assigned', req.user.id]
+                 WHERE lp.owner_id = ? AND o.status IN ('driver_assigned', 'received', 'awaiting_payment', 'paid', 'pending')`,
+                [req.user.userId]
             );
             return res.json(orders);
         }
@@ -92,7 +91,7 @@ router.put('/:id/confirm', authenticateToken, async (req, res) => {
     const orderId = req.params.id;
     const { weight, total_price } = req.body;
 
-    if (req.user.role !== 'owner') {
+    if (req.user.role !== 'laundry_owner') {
         return res.status(403).json({ error: 'Unauthorized' });
     }
 
@@ -102,7 +101,7 @@ router.put('/:id/confirm', authenticateToken, async (req, res) => {
              JOIN laundry_places lp ON o.laundry_place_id = lp.id
              SET o.status = 'received', o.weight = ?, o.total_price = ?
              WHERE o.id = ? AND lp.owner_id = ?`,
-            [weight, total_price, orderId, req.user.id]
+            [weight, total_price, orderId, req.user.userId]
         );
 
         if (result.affectedRows === 0) {
@@ -115,3 +114,5 @@ router.put('/:id/confirm', authenticateToken, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+module.exports = router;

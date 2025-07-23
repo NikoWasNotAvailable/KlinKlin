@@ -110,3 +110,9 @@
     min-width: 150px;
     /* agar tidak terlalu sempit */
 }
+
+.send-driver-btn.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}

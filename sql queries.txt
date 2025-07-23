@@ -123,3 +123,8 @@ INSERT INTO services (laundry_place_id, type, name, price) VALUES
 (1, 'satuan', 'Karpet Besar', 40000),
 (1, 'satuan', 'Karpet Sedang', 30000),
 (1, 'satuan', 'Karpet Kecil', 20000);
+
+INSERT INTO orders (customer_id, laundry_place_id, status, type, pickup_datetime)
+VALUES
+(3, 1, 'pending', 'kiloan', '2025-07-24 10:00:00'),
+(3, 1, 'pending', 'satuan', '2025-07-24 14:00:00');

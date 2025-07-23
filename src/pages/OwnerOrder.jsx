@@ -8,7 +8,12 @@ const OwnerOrder = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const res = await fetch('http://localhost:3000/api/orders?status=driver_assigned');
+                const token = localStorage.getItem('token');
+                const res = await fetch('http://localhost:3000/api/orders', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 const data = await res.json();
                 setOrders(data);
                 console.log('Fetched orders for owner:', data);
@@ -24,7 +29,7 @@ const OwnerOrder = () => {
         <div className="admin-orders-page">
             <div className="orders-list">
                 {orders.length === 0 ? (
-                    <p>No orders awaiting confirmation</p>
+                    <p>No ongoing orders</p>
                 ) : (
                     orders.map((order) => (
                         <div key={order.id} className="order-card">
@@ -52,8 +57,13 @@ const OwnerOrder = () => {
                             </div>
 
                             <Link
-                                className="send-driver-btn"
+                                className={`send-driver-btn ${order.status !== 'driver_assigned' ? 'disabled' : ''}`}
                                 to={`/owner/confirm/${order.id}`}
+                                onClick={(e) => {
+                                    if (order.status !== 'driver_assigned') {
+                                        e.preventDefault();
+                                    }
+                                }}
                             >
                                 Confirm Order
                             </Link>
