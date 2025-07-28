@@ -89,42 +89,67 @@ CREATE TABLE IF NOT EXISTS reviews (
   FOREIGN KEY (laundry_place_id) REFERENCES laundry_places(id)
 );
 🧪 Sample Dummy Data
-sql
-Copy
-Edit
+INSERT INTO users (username, password, role, first_name, last_name, phone, address, dob, email)
+VALUES 
 -- Admin
-INSERT INTO users (username, password, role, first_name) VALUES
-('admin', 'password123', 'admin', 'Niko');
+('admin', 'admin123', 'admin', 'Niko', 'Wijaya', '081234567890', 'Jl. Admin Raya', '1990-01-01', 'admin@example.com'),
 
 -- Laundry Owner
-INSERT INTO users (username, password, role, first_name) VALUES
-('owner1', 'password123', 'laundry_owner', 'Rina');
+('owner1', 'password123', 'laundry_owner', 'Rina', 'Susanti', '082134567891', 'Jl. Laundry No. 1', '1992-04-01', 'rina@laundry.com'),
 
 -- Customer
-INSERT INTO users (username, password, role, first_name) VALUES
-('cust1', 'password123', 'customer', 'Marvin');
+('cust1', 'password123', 'customer', 'Marvin', 'Santoso', '085612345678', 'Jl. Pelanggan 123', '1999-07-20', 'marvin@gmail.com');
 
--- Laundry Place
+
 INSERT INTO laundry_places (name, description, rating, owner_id, address, latitude, longitude)
-VALUES ('KlinKlin Laundry Express', 'Laundry cepat dan bersih', 4.7, 2, 'Jl. Meruya No.1', -6.200000, 106.800000);
+VALUES 
+('KlinKlin Laundry Express', 'Laundry cepat, bersih, dan wangi.', 4.7, 2, 'Jl. Meruya No.1', -6.200000, 106.800000);
 
--- Services
+-- Kiloan services
 INSERT INTO services (laundry_place_id, type, name, price) VALUES
-(1, 'kiloan', 'Jasa Cuci Reguler', 30000),
-(1, 'kiloan', 'Jasa Dry Cleaning', 30000),
-(1, 'kiloan', 'Jasa Setrika', 30000),
+(1, 'kiloan', 'Cuci Reguler', 30000),
+(1, 'kiloan', 'Dry Cleaning', 35000),
+(1, 'kiloan', 'Setrika Saja', 20000);
+
+-- Satuan services
+INSERT INTO services (laundry_place_id, type, name, price)
+VALUES
 (1, 'satuan', 'Jas Kerja / Kuliah', 25000),
 (1, 'satuan', 'Selimut Besar', 30000),
 (1, 'satuan', 'Selimut Sedang', 25000),
 (1, 'satuan', 'Selimut Kecil', 20000),
-(1, 'satuan', 'Spray Besar', 30000),
-(1, 'satuan', 'Spray Sedang', 25000),
-(1, 'satuan', 'Spray Kecil', 20000),
-(1, 'satuan', 'Karpet Besar', 40000),
-(1, 'satuan', 'Karpet Sedang', 30000),
+(1, 'satuan', 'Spray Besar', 25000),
+(1, 'satuan', 'Spray Sedang', 20000),
+(1, 'satuan', 'Spray Kecil', 15000),
+(1, 'satuan', 'Karpet Besar', 30000),
+(1, 'satuan', 'Karpet Sedang', 25000),
 (1, 'satuan', 'Karpet Kecil', 20000);
 
-INSERT INTO orders (customer_id, laundry_place_id, status, type, pickup_datetime)
+
+
+-- Kiloan order with driver assigned
+INSERT INTO orders (customer_id, laundry_place_id, status, type, pickup_datetime, total_weight, total_price)
+VALUES 
+(3, 1, 'driver_assigned', 'kiloan', '2025-07-24 10:00:00', 3.5, 105000),
+
+-- Satuan order already received and priced
+(3, 1, 'received', 'satuan', '2025-07-24 14:00:00', NULL, 95000);
+
+-- Jas x1, Spray Sedang x2, Karpet Kecil x1
+INSERT INTO order_items (order_id, service_id, quantity)
 VALUES
-(3, 1, 'pending', 'kiloan', '2025-07-24 10:00:00'),
-(3, 1, 'pending', 'satuan', '2025-07-24 14:00:00');
+(2, 4, 1), -- Jas (25000)
+(2, 6, 2), -- Spray Sedang (25000 * 2)
+(2, 7, 1); -- Karpet Kecil (20000)
+
+-- Jas x1, Spray Sedang x2, Karpet Kecil x1
+INSERT INTO order_items (order_id, service_id, quantity)
+VALUES
+(2, 4, 1), -- Jas (25000)
+(2, 6, 2), -- Spray Sedang (25000 * 2)
+(2, 7, 1); -- Karpet Kecil (20000)
+
+INSERT INTO reviews (user_id, laundry_place_id, rating, comment)
+VALUES
+(3, 1, 5, 'Pelayanan sangat baik dan hasil cucian bersih banget!'),
+(3, 1, 4, 'Driver on-time, tapi karpet agak lama keringnya.');
