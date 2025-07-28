@@ -1,4 +1,3 @@
-// src/main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -6,11 +5,12 @@ import App from './App.jsx';
 import Home from './pages/Home.jsx';
 import Laundry from './pages/Laundry.jsx';
 import Login from './pages/Login.jsx';
-import Profile from './pages/Profile.jsx'
-import LaundryDetail from './pages/LaundryDetail.jsx'
-import MetodePembayaran from './pages/MetodePembayaran.jsx'
-import OrderLaundry from './pages/OrderLaundry.jsx'
-import OrderRoute from './pages/OrderRoute.jsx'
+import Profile from './pages/Profile.jsx';
+import LaundryDetail from './pages/LaundryDetail.jsx';
+import MetodePembayaran from './pages/MetodePembayaran.jsx';
+import OrderLaundry from './pages/OrderLaundry.jsx';
+import OrderRoute from './pages/OrderRoute.jsx';
+import OwnerConfirmOrder from './pages/OwnerConfirmOrder.jsx';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -41,7 +41,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/profile" element={<App />}>
           <Route index element={<Profile />} />
         </Route>
+        <Route path="/owner/confirm/:id" element={<App />}>
+          <Route index element={<OwnerConfirmOrder />} />
+        </Route>
         <Route path="/login" element={<Login />} />
+
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

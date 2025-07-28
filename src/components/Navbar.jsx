@@ -37,7 +37,10 @@ function Navbar() {
 
   // ✅ Set white background for both /laundry and /laundrydetail
   const isWhiteBackground =
-    location.pathname.startsWith('/laundry') || location.pathname === '/order' || location.pathname === '/metodepembayaran';
+    location.pathname.startsWith('/laundry') ||
+    location.pathname.startsWith('/order') ||
+    location.pathname === '/metodepembayaran' ||
+    location.pathname.startsWith('/owner/confirm');
 
   return (
     <nav className={`navbar ${isWhiteBackground ? 'white-background' : ''}`}>

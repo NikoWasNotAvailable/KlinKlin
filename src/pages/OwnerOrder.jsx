@@ -55,17 +55,41 @@ const OwnerOrder = () => {
                                 </div>
                             </div>
 
-                            <Link
+                            <button
                                 className={`send-driver-btn ${order.status !== 'driver_assigned' ? 'disabled' : ''}`}
-                                to={`/owner/confirm/${order.id}`}
-                                onClick={(e) => {
-                                    if (order.status !== 'driver_assigned') {
-                                        e.preventDefault();
+                                onClick={async (e) => {
+                                    if (order.status !== 'driver_assigned') return;
+
+                                    if (order.type === 'satuan') {
+                                        try {
+                                            const token = localStorage.getItem('token');
+                                            const res = await fetch(`http://localhost:3000/api/orders/${order.id}/confirm`, {
+                                                method: 'PUT',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                    Authorization: `Bearer ${token}`,
+                                                },
+                                                body: JSON.stringify({}) // no weight or price needed
+                                            });
+                                            const data = await res.json();
+                                            if (res.ok) {
+                                                alert('Order confirmed!');
+                                                window.location.reload(); // refresh to reflect new status
+                                            } else {
+                                                alert(data.error || 'Failed to confirm order');
+                                            }
+                                        } catch (err) {
+                                            console.error(err);
+                                            alert('An error occurred');
+                                        }
+                                    } else {
+                                        window.location.href = `/owner/confirm/${order.id}`;
                                     }
                                 }}
                             >
                                 Confirm Order
-                            </Link>
+                            </button>
+
                         </div>
                     ))
                 )}
