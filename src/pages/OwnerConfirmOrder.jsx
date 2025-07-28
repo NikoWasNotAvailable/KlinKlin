@@ -8,7 +8,8 @@ const OwnerConfirmOrder = () => {
 
     const [order, setOrder] = useState(null);
     const [weight, setWeight] = useState('');
-    const pricePerKg = 30000;
+    const [servicePrice, setServicePrice] = useState(0);
+    const [serviceName, setServiceName] = useState('');
     const pickupFee = 30000;
 
     useEffect(() => {
@@ -24,6 +25,12 @@ const OwnerConfirmOrder = () => {
                 });
                 const data = await res.json();
                 setOrder(data);
+
+                if (data.type === 'kiloan' && data.items && data.items.length > 0) {
+                    setServicePrice(data.items[0].price);
+                    setServiceName(data.items[0].name);
+                }
+
             } catch (err) {
                 console.error('Error fetching order details:', err);
             }
@@ -32,7 +39,7 @@ const OwnerConfirmOrder = () => {
         fetchOrder();
     }, [id]);
 
-    const totalPrice = weight ? pickupFee + weight * pricePerKg : 0;
+    const totalPrice = weight ? pickupFee + weight * servicePrice : 0;
 
     const handleConfirm = async () => {
         try {
@@ -79,9 +86,10 @@ const OwnerConfirmOrder = () => {
                     <label>Tipe Jasa</label>
                     <div className="service-card">
                         <div className="service-header">
-                            <strong>Jasa Cuci Reguler</strong>
-                            <span>Rp. 30,000</span>
+                            <strong>{serviceName}</strong>
+                            <span>Rp. {servicePrice.toLocaleString('id-ID')}</span>
                         </div>
+
                         <p>Lorem ipsum dolor sit amet consectetur. Donec maecenas dictum vulputate nulla nibh.</p>
                     </div>
                 </div>
@@ -93,9 +101,10 @@ const OwnerConfirmOrder = () => {
                         <span>Rp. {pickupFee.toLocaleString('id-ID')}</span>
                     </div>
                     <div className="price-row">
-                        <span>{weight || 0}kg Cuci Express</span>
-                        <span>Rp. {(weight * pricePerKg || 0).toLocaleString('id-ID')}</span>
+                        <span>{weight || 0}kg {serviceName}</span>
+                        <span>Rp. {(weight * servicePrice || 0).toLocaleString('id-ID')}</span>
                     </div>
+
                     <div className="price-row total">
                         <strong>Total Biaya</strong>
                         <strong>Rp. {totalPrice.toLocaleString('id-ID')}</strong>

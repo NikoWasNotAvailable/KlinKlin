@@ -68,7 +68,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
     const orderId = req.params.id;
 
     try {
-        const [rows] = await pool.query(
+        const [orders] = await pool.query(
             `SELECT o.*, u.first_name, u.last_name, lp.name AS laundry_name
              FROM orders o
              JOIN users u ON o.customer_id = u.id
@@ -77,16 +77,30 @@ router.get('/:id', authenticateToken, async (req, res) => {
             [orderId]
         );
 
-        if (rows.length === 0) {
+        if (orders.length === 0) {
             return res.status(404).json({ error: 'Order not found' });
         }
 
-        res.json(rows[0]);
+        const order = orders[0];
+
+        // Fetch service details
+        const [items] = await pool.query(
+            `SELECT oi.quantity, s.name, s.price
+             FROM order_items oi
+             JOIN services s ON oi.service_id = s.id
+             WHERE oi.order_id = ?`,
+            [orderId]
+        );
+
+        order.items = items;
+
+        res.json(order);
     } catch (err) {
         console.error('Error fetching order:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 // ===== PUT: Admin assigns driver =====
 router.put('/:id/assign-driver', authenticateToken, async (req, res) => {
