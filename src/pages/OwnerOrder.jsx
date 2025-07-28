@@ -16,7 +16,6 @@ const OwnerOrder = () => {
                 });
                 const data = await res.json();
                 setOrders(data);
-                console.log('Fetched orders for owner:', data);
             } catch (err) {
                 console.error('Error fetching owner orders:', err);
             }

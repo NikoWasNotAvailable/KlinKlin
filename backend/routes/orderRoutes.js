@@ -19,7 +19,6 @@ function authenticateToken(req, res, next) {
 router.get('/', authenticateToken, async (req, res) => {
     const pool = getPool();
     const { status, user } = req.query;
-
     try {
         if (user === 'me') {
             // CUSTOMER VIEW
