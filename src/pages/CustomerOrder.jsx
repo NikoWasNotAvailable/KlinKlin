@@ -36,13 +36,13 @@ const CustomerOrder = () => {
                     <p>You have no orders yet</p>
                 ) : (
                     orders.map((order) => (
-                        <div key={order.id} className="order-card">
+                        <div className="order-card">
                             <div className="order-user">
-                                <img src="/avatar-customer.png" alt="User" />
+                                <img src="/laundry-icon.png" alt="Laundry" />
                                 <div>
-                                    <div className="name">Order #{order.id}</div>
+                                    <div className="name">{order.laundry_name}</div>
                                     <div className="service-type">
-                                        {order.type === 'kiloan' ? 'Jasa Cuci Reguler' : 'Jasa Cuci Satuan'}
+                                        Order #{order.id} - {order.type === 'kiloan' ? 'Jasa Cuci Reguler' : 'Jasa Cuci Satuan'}
                                     </div>
                                 </div>
                             </div>
@@ -66,6 +66,7 @@ const CustomerOrder = () => {
                                 Go to Payment
                             </button>
                         </div>
+
                     ))
                 )}
             </div>
