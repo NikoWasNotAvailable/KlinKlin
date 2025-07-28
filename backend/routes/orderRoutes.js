@@ -217,4 +217,84 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     }
 });
 
+// ===== POST: Create new order =====
+router.post('/', authenticateToken, async (req, res) => {
+    const pool = getPool();
+    const { laundry_place_id, type, pickup_datetime, service_id, items } = req.body;
+    const customer_id = req.user.userId;
+
+    if (!pickup_datetime || !laundry_place_id || !type) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    try {
+        const formattedPickup = formatToMySQLDatetime(pickup_datetime);
+
+        // Insert order first with total_price = 0 temporarily
+        const [orderResult] = await pool.query(
+            `INSERT INTO orders (customer_id, laundry_place_id, type, pickup_datetime, total_price)
+             VALUES (?, ?, ?, ?, ?)`,
+            [customer_id, laundry_place_id, type, formattedPickup, 0]
+        );
+
+        const orderId = orderResult.insertId;
+        let totalPrice = 0;
+
+        if (type === 'kiloan') {
+            // Service_id is already provided from frontend
+            const [rows] = await pool.query(`SELECT price FROM services WHERE id = ?`, [service_id]);
+            if (!rows.length) {
+                return res.status(400).json({ error: 'Service not found' });
+            }
+            const price = rows[0].price;
+
+            await pool.query(
+                `INSERT INTO order_items (order_id, service_id, quantity) VALUES (?, ?, ?)`,
+                [orderId, service_id, 1]
+            );
+        } else if (type === 'satuan' && Array.isArray(items)) {
+            for (const item of items) {
+                const [rows] = await pool.query(
+                    `SELECT price FROM services WHERE id = ? AND laundry_place_id = ? AND type = 'satuan'`,
+                    [item.service_id, laundry_place_id]
+                );
+                if (rows.length > 0) {
+                    const price = rows[0].price;
+                    const subTotal = price * item.quantity;
+                    totalPrice += subTotal;
+
+                    await pool.query(
+                        `INSERT INTO order_items (order_id, service_id, quantity) VALUES (?, ?, ?)`,
+                        [orderId, item.service_id, item.quantity]
+                    );
+                }
+            }
+        }
+
+        // Update total_price after inserting items
+        await pool.query(`UPDATE orders SET total_price = ? WHERE id = ?`, [totalPrice, orderId]);
+
+        return res.status(201).json({ success: true, order_id: orderId });
+    } catch (err) {
+        console.error('Error creating order:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+function formatToMySQLDatetime(isoString) {
+    const date = new Date(isoString);
+    const pad = (n) => (n < 10 ? '0' + n : n);
+
+    const yyyy = date.getFullYear();
+    const mm = pad(date.getMonth() + 1);
+    const dd = pad(date.getDate());
+    const hh = pad(date.getHours());
+    const mi = pad(date.getMinutes());
+    const ss = pad(date.getSeconds());
+
+    return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+}
+
+
 module.exports = router;
