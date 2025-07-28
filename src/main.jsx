@@ -8,6 +8,7 @@ import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx';
 import LaundryDetail from './pages/LaundryDetail.jsx';
 import MetodePembayaran from './pages/MetodePembayaran.jsx';
+import PaymentSuccess from './pages/PaymentSuccess.jsx';
 import OrderLaundry from './pages/OrderLaundry.jsx';
 import OrderRoute from './pages/OrderRoute.jsx';
 import OwnerConfirmOrder from './pages/OwnerConfirmOrder.jsx';
@@ -29,8 +30,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/order" element={<App />}>
           <Route index element={<OrderRoute />} />
         </Route>
-        <Route path="/metodepembayaran" element={<App />}>
+        <Route path="/payment/:id" element={<App />}>
           <Route index element={<MetodePembayaran />} />
+        </Route>
+        <Route path="/payment/success/:id" element={<App />}>
+          <Route index element={<PaymentSuccess />} />
         </Route>
         <Route path="/laundrydetail" element={<App />}>
           <Route index element={<LaundryDetail />} />

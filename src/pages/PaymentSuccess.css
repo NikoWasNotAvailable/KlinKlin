@@ -1,0 +1,47 @@
+.payment-success {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 12px;
+    background-color: #F4FFEA;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2f855a;
+    text-align: center;
+    min-height: 80vh;
+}
+
+.payment-success h2 {
+    font-size: 28px;
+    margin-bottom: 12px;
+    color: #2f855a;
+}
+
+.payment-success p {
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+.order-details {
+    margin-top: 20px;
+    padding: 20px;
+    border-top: 1px solid #c6f6d5;
+    text-align: left;
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+.order-details p,
+.order-details ul {
+    margin: 6px 0;
+    font-size: 15px;
+    color: #22543d;
+}
+
+.order-details ul {
+    padding-left: 20px;
+}
+
+.order-details li {
+    margin-bottom: 5px;
+}

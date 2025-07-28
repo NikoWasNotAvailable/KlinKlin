@@ -190,7 +190,7 @@ router.put('/:id/pay', authenticateToken, async (req, res) => {
         const [result] = await pool.query(
             `UPDATE orders
              SET status = 'paid'
-             WHERE id = ? AND customer_id = ? AND status = 'awaiting_payment'`,
+             WHERE id = ? AND customer_id = ? AND status = 'received'`,
             [orderId, req.user.userId]
         );
 

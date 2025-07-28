@@ -1,16 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MetodePembayaran.css';
-import bca from '../assets/bca.png'
-import mandiri from '../assets/mandiri.png'
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import bca from '../assets/bca.png';
+import mandiri from '../assets/mandiri.png';
+import axios from 'axios';
 
 const MetodePembayaran = () => {
+    const { id } = useParams(); // order ID from URL
     const navigate = useNavigate();
 
     const [selectedMethod, setSelectedMethod] = useState('');
     const [selectedVA, setSelectedVA] = useState('');
     const [selectedBank, setSelectedBank] = useState('');
     const [saveCard, setSaveCard] = useState(false);
+    const [order, setOrder] = useState(null);
+
+    useEffect(() => {
+        const fetchOrder = async () => {
+            try {
+                const token = localStorage.getItem('token'); // or from context
+                const response = await axios.get(`http://localhost:3000/api/orders/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setOrder(response.data);
+            } catch (error) {
+                console.error('Failed to fetch order:', error);
+            }
+        };
+
+        fetchOrder();
+    }, [id]);
+
+    const handlePay = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            await axios.put(`http://localhost:3000/api/orders/${id}/pay`, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            alert('Pembayaran berhasil!');
+            navigate(`/payment/success/${id}`);
+        } catch (error) {
+            alert('Gagal melakukan pembayaran.');
+            console.error('Payment error:', error);
+        }
+    };
+
+    if (!order) return <div>Loading...</div>;
 
     return (
         <div className="metode-page">
@@ -35,7 +74,6 @@ const MetodePembayaran = () => {
                                     {method}
                                 </label>
 
-                                {/* Virtual Account Sub-options */}
                                 {selectedMethod === method && method === 'Virtual Account' && (
                                     <div className="sub-options">
                                         {['BCA', 'Mandiri'].map((bank) => {
@@ -55,11 +93,9 @@ const MetodePembayaran = () => {
                                                 </label>
                                             );
                                         })}
-
                                     </div>
                                 )}
 
-                                {/* Kartu Kredit/Debit Sub-options */}
                                 {selectedMethod === method && method === 'Kartu Kredit/Debit' && (
                                     <div className="sub-options">
                                         {['BCA', 'Mandiri', 'BNI', 'CIMB Niaga'].map((bank) => (
@@ -80,7 +116,6 @@ const MetodePembayaran = () => {
                         ))}
                     </div>
 
-                    {/* Form kartu */}
                     {selectedMethod === 'Kartu Kredit/Debit' && (
                         <div className="card-section">
                             <label>
@@ -91,14 +126,12 @@ const MetodePembayaran = () => {
                             <div className="form-row">
                                 <label>
                                     <strong>Tanggal Kedaluwarsa</strong>
-                                    <input className="tanggal-kedaluwarsa" type="text" placeholder="Ex: 21 Januari 2023" />
+                                    <input type="text" placeholder="Ex: 21 Januari 2023" />
                                 </label>
 
                                 <label>
                                     <strong>CVC/CVV</strong>
-                                    <div className="cvv-input">
-                                        <input type="text" placeholder="Ex: CVV" />
-                                    </div>
+                                    <input type="text" placeholder="CVV" />
                                 </label>
                             </div>
 
@@ -108,31 +141,39 @@ const MetodePembayaran = () => {
                                     checked={saveCard}
                                     onChange={() => setSaveCard(!saveCard)}
                                 />
-                                Simpan kartu ini dengan aman untuk transaksi berikutnya
+                                Simpan kartu ini untuk transaksi berikutnya
                             </label>
                         </div>
                     )}
+
+                    <button className="pay-button" onClick={handlePay}>Bayar Sekarang</button>
                 </div>
 
                 <div className="right-side">
                     <h4>Ringkasan</h4>
-                    <p><strong>Berat Cucian:</strong></p>
-                    <div className="berat-cucian">5 kg</div>
+                    {order.total_weight && (
+                        <>
+                            <p><strong>Berat Cucian:</strong></p>
+                            <div className="berat-cucian">{order.total_weight} kg</div>
+                        </>
+                    )}
 
                     <p><strong>Tipe Layanan:</strong></p>
                     <div className="summary-service-box">
-                        <div className="header">
-                            <span>Cuci reguler</span>
-                            <span>Rp. 30.000</span>
-                        </div>
-                        <p className="desc">Lorem ipsum dolor sit amet consectetur. Donec malesuada dictum vulputate nibh nibh.</p>
+                        {order.items?.map((item, i) => (
+                            <div key={i}>
+                                <div className="header">
+                                    <span>{item.name}</span>
+                                    <span>Rp. {item.price.toLocaleString()}</span>
+                                </div>
+                                <p>Jumlah: {item.quantity}</p>
+                            </div>
+                        ))}
                     </div>
 
                     <div className="pricing">
-                        <p>Harga Asli: <span>Rp. 120.000</span></p>
-                        <p>Diskon: <span>Rp. 30.000</span></p>
-                        <p>Ongkir: <span>Rp. 20.000</span></p>
-                        <p><strong>Total:</strong> <strong>Rp. 70.000</strong></p>
+                        <p>Harga Asli: <span>Rp. {order.total_price?.toLocaleString()}</span></p>
+                        <p><strong>Total:</strong> <strong>Rp. {order.total_price?.toLocaleString()}</strong></p>
                     </div>
                 </div>
             </div>
