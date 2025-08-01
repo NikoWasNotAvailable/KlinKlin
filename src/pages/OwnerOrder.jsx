@@ -33,7 +33,6 @@ const OwnerOrder = () => {
                     orders.map((order) => (
                         <div key={order.id} className="order-card">
                             <div className="order-user">
-                                <img src="/avatar-customer.png" alt="User" />
                                 <div>
                                     <div className="name">
                                         {order.customer_first_name || 'Unknown'} {order.customer_last_name || ''}

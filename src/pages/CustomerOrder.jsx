@@ -16,6 +16,7 @@ const CustomerOrder = () => {
                     }
                 });
                 const data = await res.json();
+                console.log(data);
                 setOrders(data);
             } catch (err) {
                 console.error('Error fetching customer orders:', err);
@@ -38,7 +39,6 @@ const CustomerOrder = () => {
                     orders.map((order) => (
                         <div className="order-card">
                             <div className="order-user">
-                                <img src="/laundry-icon.png" alt="Laundry" />
                                 <div>
                                     <div className="name">{order.laundry_name}</div>
                                     <div className="service-type">
