@@ -16,7 +16,6 @@ const CustomerOrder = () => {
                     }
                 });
                 const data = await res.json();
-                console.log(data);
                 setOrders(data);
             } catch (err) {
                 console.error('Error fetching customer orders:', err);
