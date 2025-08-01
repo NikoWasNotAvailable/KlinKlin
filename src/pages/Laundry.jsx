@@ -1,19 +1,35 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import klinKlinImage from '../assets/home.png';
-import image1 from '../assets/image1.jpg';
-import image2 from '../assets/image2.jpg';
-import image3 from '../assets/image3.jpg';
-import image4 from '../assets/image4.jpg';
-import image5 from '../assets/Image5.jpg';
-import image6 from '../assets/Image6.jpg';
 import './Laundry.css';
+import defaultImage from '../assets/home.png'; // fallback image if needed
 
 export default function Laundry() {
   const navigate = useNavigate();
+  const [laundryPlaces, setLaundryPlaces] = useState([]);
 
   const handleCardClick = (id) => {
-    navigate('/laundrydetail'); 
+    navigate(`/laundrydetail/${id}`); // updated to use dynamic ID if needed
   };
+
+  useEffect(() => {
+    const fetchLaundryPlaces = async () => {
+      try {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch('http://localhost:3000/api/laundries ', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        const data = await response.json();
+        setLaundryPlaces(data);
+      } catch (error) {
+        console.error('Error fetching laundry places:', error);
+      }
+    };
+
+    fetchLaundryPlaces();
+  }, []);
 
   return (
     <div className="app-container-laundry">
@@ -41,19 +57,23 @@ export default function Laundry() {
           <h2>Laundry Place</h2>
           <div className="laundry-cards-wrapper">
             <div className="laundry-cards">
-              {laundryPlaces.map((place) => (
-                <div
-                  className="laundry-card"
-                  key={place.id}
-                  onClick={() => handleCardClick(place.id)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <img src={place.image} alt={place.name} />
-                  <h3>{place.name}</h3>
-                  <p>{place.description}</p>
-                  <p>⭐ {place.rating} / 5</p>
-                </div>
-              ))}
+              {laundryPlaces.length === 0 ? (
+                <p>Loading...</p>
+              ) : (
+                laundryPlaces.map((place) => (
+                  <div
+                    className="laundry-card"
+                    key={place.id}
+                    onClick={() => handleCardClick(place.id)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <img src={defaultImage} alt={place.name} />
+                    <h3>{place.name}</h3>
+                    <p>{place.description}</p>
+                    <p>⭐ {place.rating ?? '4.0'} / 5</p>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -61,49 +81,3 @@ export default function Laundry() {
     </div>
   );
 }
-
-
-const laundryPlaces = [
-  {
-    id: 1,
-    name: 'Laundry Anggrek',
-    description: 'Quality Laundry, Fast And Clean.',
-    rating: 4.1,
-    image: image1,
-  },
-  {
-    id: 2,
-    name: 'Laundry Kemanggisan',
-    description: 'Friendly service and excellent results.',
-    rating: 4.2,
-    image: image2,
-  },
-  {
-    id: 3,
-    name: 'Laundry Palmerah',
-    description: 'Fast and punctual pick-up and delivery.',
-    rating: 4.3,
-    image: image3,
-  },
-  {
-    id: 4,
-    name: 'Laundry Slipi',
-    description: 'Affordable prices, clean results.',
-    rating: 4.4,
-    image: image4,
-  },
-  {
-    id: 5,
-    name: 'Laundry Rompas',
-    description: 'Clothes always come back smelling fresh and neatly folded!',
-    rating: 4.4,
-    image: image5,
-  },
-  {
-    id: 6,
-    name: 'Luiz Laundry',
-    description: 'Fast and satisfying service.',
-    rating: 4.4,
-    image: image6,
-  },
-];
