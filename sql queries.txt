@@ -1,8 +1,4 @@
-MySQL Schema Changes
-1. Updated users table
-sql
-Copy
-Edit
+
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(255) NOT NULL UNIQUE,
@@ -18,10 +14,9 @@ CREATE TABLE IF NOT EXISTS users (
   twitter VARCHAR(255),
   facebook VARCHAR(255)
 );
-2. laundry_places
-sql
-Copy
-Edit
+
+
+
 CREATE TABLE IF NOT EXISTS laundry_places (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255),
@@ -33,10 +28,9 @@ CREATE TABLE IF NOT EXISTS laundry_places (
   longitude DECIMAL(10, 6),
   FOREIGN KEY (owner_id) REFERENCES users(id)
 );
-3. services table
-sql
-Copy
-Edit
+
+
+
 CREATE TABLE IF NOT EXISTS services (
   id INT AUTO_INCREMENT PRIMARY KEY,
   laundry_place_id INT,
@@ -45,10 +39,9 @@ CREATE TABLE IF NOT EXISTS services (
   price INT,
   FOREIGN KEY (laundry_place_id) REFERENCES laundry_places(id)
 );
-4. orders
-sql
-Copy
-Edit
+
+
+
 CREATE TABLE IF NOT EXISTS orders (
   id INT AUTO_INCREMENT PRIMARY KEY,
   customer_id INT,
@@ -62,10 +55,9 @@ CREATE TABLE IF NOT EXISTS orders (
   FOREIGN KEY (customer_id) REFERENCES users(id),
   FOREIGN KEY (laundry_place_id) REFERENCES laundry_places(id)
 );
-5. order_items (if satuan)
-sql
-Copy
-Edit
+
+
+
 CREATE TABLE IF NOT EXISTS order_items (
   id INT AUTO_INCREMENT PRIMARY KEY,
   order_id INT,
@@ -74,10 +66,9 @@ CREATE TABLE IF NOT EXISTS order_items (
   FOREIGN KEY (order_id) REFERENCES orders(id),
   FOREIGN KEY (service_id) REFERENCES services(id)
 );
-6. reviews
-sql
-Copy
-Edit
+
+
+
 CREATE TABLE IF NOT EXISTS reviews (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT,
@@ -88,7 +79,6 @@ CREATE TABLE IF NOT EXISTS reviews (
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (laundry_place_id) REFERENCES laundry_places(id)
 );
-🧪 Sample Dummy Data
 INSERT INTO users (username, password, role, first_name, last_name, phone, address, dob, email)
 VALUES 
 -- Admin
@@ -153,3 +143,103 @@ INSERT INTO reviews (user_id, laundry_place_id, rating, comment)
 VALUES
 (3, 1, 5, 'Pelayanan sangat baik dan hasil cucian bersih banget!'),
 (3, 1, 4, 'Driver on-time, tapi karpet agak lama keringnya.');
+
+-- 🧑‍💼 New Laundry Owners
+INSERT INTO users (username, password, role, first_name, last_name, phone, address, dob, email)
+VALUES
+('owner2', 'password123', 'laundry_owner', 'Dina', 'Hartati', '082134567892', 'Jl. Laundry No. 2', '1991-03-05', 'dina@laundry.com'),
+('owner3', 'password123', 'laundry_owner', 'Farid', 'Yusuf', '082134567893', 'Jl. Laundry No. 3', '1988-11-12', 'farid@laundry.com'),
+('owner4', 'password123', 'laundry_owner', 'Lina', 'Agustina', '082134567894', 'Jl. Laundry No. 4', '1995-06-10', 'lina@laundry.com'),
+('owner5', 'password123', 'laundry_owner', 'Gilang', 'Saputra', '082134567895', 'Jl. Laundry No. 5', '1990-12-01', 'gilang@laundry.com'),
+('owner6', 'password123', 'laundry_owner', 'Sari', 'Indah', '082134567896', 'Jl. Laundry No. 6', '1989-07-08', 'sari@laundry.com');
+
+-- 🧺 New Laundry Places
+INSERT INTO laundry_places (name, description, rating, owner_id, address, latitude, longitude)
+VALUES
+('CuciCeria Laundry', 'Pelayanan ramah dan cepat.', 4.5, 4, 'Jl. Cuci Ceria No.2', -6.201000, 106.801000),
+('LaundryQ Bersih', 'Cucian harum dan higienis.', 4.6, 5, 'Jl. Bersih Sejahtera No.3', -6.202000, 106.802000),
+('ExpressWash', 'Cepat dan terpercaya.', 4.4, 6, 'Jl. Express No.4', -6.203000, 106.803000),
+('BersihPlus Laundry', 'Solusi cuci bersih untuk keluarga.', 4.8, 7, 'Jl. Bersih Banget No.5', -6.204000, 106.804000),
+('LaundryKita', 'Harga terjangkau, hasil maksimal.', 4.3, 8, 'Jl. Kita Bersih No.6', -6.205000, 106.805000);
+
+-- 🧾 Services for each new laundry (laundry_place_id = 2..6)
+
+-- 💧 Kiloan & Satuan for CuciCeria Laundry
+INSERT INTO services (laundry_place_id, type, name, price) VALUES
+(2, 'kiloan', 'Cuci Reguler', 28000),
+(2, 'kiloan', 'Dry Cleaning', 36000),
+(2, 'kiloan', 'Setrika Saja', 19000),
+(2, 'satuan', 'Jas Kerja / Kuliah', 24000),
+(2, 'satuan', 'Selimut Besar', 31000),
+(2, 'satuan', 'Selimut Sedang', 26000),
+(2, 'satuan', 'Selimut Kecil', 21000),
+(2, 'satuan', 'Spray Besar', 26000),
+(2, 'satuan', 'Spray Sedang', 21000),
+(2, 'satuan', 'Spray Kecil', 16000),
+(2, 'satuan', 'Karpet Besar', 31000),
+(2, 'satuan', 'Karpet Sedang', 26000),
+(2, 'satuan', 'Karpet Kecil', 21000);
+
+-- 🧼 LaundryQ Bersih
+INSERT INTO services (laundry_place_id, type, name, price) VALUES
+(3, 'kiloan', 'Cuci Reguler', 29000),
+(3, 'kiloan', 'Dry Cleaning', 37000),
+(3, 'kiloan', 'Setrika Saja', 18000),
+(3, 'satuan', 'Jas Kerja / Kuliah', 26000),
+(3, 'satuan', 'Selimut Besar', 32000),
+(3, 'satuan', 'Selimut Sedang', 27000),
+(3, 'satuan', 'Selimut Kecil', 22000),
+(3, 'satuan', 'Spray Besar', 27000),
+(3, 'satuan', 'Spray Sedang', 22000),
+(3, 'satuan', 'Spray Kecil', 17000),
+(3, 'satuan', 'Karpet Besar', 32000),
+(3, 'satuan', 'Karpet Sedang', 27000),
+(3, 'satuan', 'Karpet Kecil', 22000);
+
+-- 🌀 ExpressWash
+INSERT INTO services (laundry_place_id, type, name, price) VALUES
+(4, 'kiloan', 'Cuci Reguler', 27000),
+(4, 'kiloan', 'Dry Cleaning', 34000),
+(4, 'kiloan', 'Setrika Saja', 21000),
+(4, 'satuan', 'Jas Kerja / Kuliah', 23000),
+(4, 'satuan', 'Selimut Besar', 29000),
+(4, 'satuan', 'Selimut Sedang', 24000),
+(4, 'satuan', 'Selimut Kecil', 20000),
+(4, 'satuan', 'Spray Besar', 25000),
+(4, 'satuan', 'Spray Sedang', 19000),
+(4, 'satuan', 'Spray Kecil', 14000),
+(4, 'satuan', 'Karpet Besar', 29000),
+(4, 'satuan', 'Karpet Sedang', 24000),
+(4, 'satuan', 'Karpet Kecil', 19000);
+
+-- 🧽 BersihPlus Laundry
+INSERT INTO services (laundry_place_id, type, name, price) VALUES
+(5, 'kiloan', 'Cuci Reguler', 31000),
+(5, 'kiloan', 'Dry Cleaning', 39000),
+(5, 'kiloan', 'Setrika Saja', 22000),
+(5, 'satuan', 'Jas Kerja / Kuliah', 27000),
+(5, 'satuan', 'Selimut Besar', 33000),
+(5, 'satuan', 'Selimut Sedang', 28000),
+(5, 'satuan', 'Selimut Kecil', 23000),
+(5, 'satuan', 'Spray Besar', 28000),
+(5, 'satuan', 'Spray Sedang', 23000),
+(5, 'satuan', 'Spray Kecil', 18000),
+(5, 'satuan', 'Karpet Besar', 33000),
+(5, 'satuan', 'Karpet Sedang', 28000),
+(5, 'satuan', 'Karpet Kecil', 23000);
+
+-- 🫧 LaundryKita
+INSERT INTO services (laundry_place_id, type, name, price) VALUES
+(6, 'kiloan', 'Cuci Reguler', 26000),
+(6, 'kiloan', 'Dry Cleaning', 32000),
+(6, 'kiloan', 'Setrika Saja', 17000),
+(6, 'satuan', 'Jas Kerja / Kuliah', 22000),
+(6, 'satuan', 'Selimut Besar', 28000),
+(6, 'satuan', 'Selimut Sedang', 23000),
+(6, 'satuan', 'Selimut Kecil', 18000),
+(6, 'satuan', 'Spray Besar', 24000),
+(6, 'satuan', 'Spray Sedang', 19000),
+(6, 'satuan', 'Spray Kecil', 14000),
+(6, 'satuan', 'Karpet Besar', 28000),
+(6, 'satuan', 'Karpet Sedang', 23000),
+(6, 'satuan', 'Karpet Kecil', 18000);

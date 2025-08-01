@@ -34,6 +34,7 @@ const PaymentSuccess = () => {
 
       <div className="order-details">
         <p><strong>ID Pesanan:</strong> {order.id}</p>
+        <p><strong>Laundry:</strong> {order.laundry_name}</p>
         <p><strong>Tipe Layanan:</strong> {order.type}</p>
         <p><strong>Status:</strong> {order.status}</p>
         <p><strong>Waktu Penjemputan:</strong> {new Date(order.pickup_datetime).toLocaleString('id-ID')}</p>
