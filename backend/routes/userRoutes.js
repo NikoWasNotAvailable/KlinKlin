@@ -55,4 +55,46 @@ router.get('/profile', async (req, res) => {
   }
 });
 
+router.post('/signup', async (req, res) => {
+  const pool = getPool();
+
+  const {
+    username,
+    password,
+    role,
+    first_name,
+    last_name,
+    phone,
+    address,
+    dob,
+    email
+  } = req.body;
+
+  if (!username || !password || !role) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  try {
+    // Check if username exists
+    const [existing] = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
+    if (existing.length > 0) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    // Insert user (plain password)
+    const [result] = await pool.query(
+      `INSERT INTO users (username, password, role, first_name, last_name, phone, address, dob, email)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [username, password, role, first_name, last_name, phone, address, dob, email]
+    );
+
+    res.status(201).json({ message: 'User registered successfully', userId: result.insertId });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+
 module.exports = router;

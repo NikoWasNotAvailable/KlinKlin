@@ -5,6 +5,7 @@ import App from './App.jsx';
 import Home from './pages/Home.jsx';
 import Laundry from './pages/Laundry.jsx';
 import Login from './pages/Login.jsx';
+import SignUp from './pages/SignUp.jsx';
 import Profile from './pages/Profile.jsx';
 import LaundryDetail from './pages/LaundryDetail.jsx';
 import MetodePembayaran from './pages/MetodePembayaran.jsx';
@@ -49,6 +50,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route index element={<OwnerConfirmOrder />} />
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
 
       </Routes>
     </BrowserRouter>

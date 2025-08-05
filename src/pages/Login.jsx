@@ -118,7 +118,7 @@ export default function Login() {
             </div>
 
             <span>
-              Don't have an account? <a href="#">Create Account</a>
+              Don't have an account? <a href="/signup">Create Account</a>
             </span>
           </form>
         </div>
