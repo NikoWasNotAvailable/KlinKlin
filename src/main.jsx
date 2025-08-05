@@ -7,6 +7,7 @@ import Laundry from './pages/Laundry.jsx';
 import Login from './pages/Login.jsx';
 import SignUp from './pages/SignUp.jsx';
 import Profile from './pages/Profile.jsx';
+import ManageLaundry from './pages/ManageLaundry.jsx'
 import LaundryDetail from './pages/LaundryDetail.jsx';
 import MetodePembayaran from './pages/MetodePembayaran.jsx';
 import PaymentSuccess from './pages/PaymentSuccess.jsx';
@@ -45,6 +46,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </Route>
         <Route path="/profile" element={<App />}>
           <Route index element={<Profile />} />
+        </Route>
+        <Route path="/managelaundry" element={<App />}>
+          <Route index element={<ManageLaundry />} />
         </Route>
         <Route path="/owner/confirm/:id" element={<App />}>
           <Route index element={<OwnerConfirmOrder />} />

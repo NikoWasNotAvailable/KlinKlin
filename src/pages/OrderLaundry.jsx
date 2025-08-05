@@ -236,7 +236,6 @@ const OrderLaundry = () => {
       <div className="order-bottom">
         <div className="form-group">
           <label>Pilih Tanggal Penjemputan</label>
-// Pada input tanggal
           <input
             type="date"
             value={tanggal}

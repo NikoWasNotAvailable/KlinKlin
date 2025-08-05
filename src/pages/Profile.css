@@ -92,7 +92,9 @@
     cursor: pointer;
 }
 
-.logout-btn {
+
+.logout-btn,
+.manage-btn {
     background-color: #f44336;
     color: white;
     border: none;
@@ -102,4 +104,8 @@
     font-weight: 500;
     float: right;
     margin-top: 1rem;
+}
+
+.manage-btn {
+    background-color: darkred;
 }

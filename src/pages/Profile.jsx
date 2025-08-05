@@ -36,6 +36,7 @@ export default function Profile() {
                     instagram: data.instagram || '',
                     twitter: data.twitter || '',
                     facebook: data.facebook || '',
+                    role: data.role, // store role
                     profileImg: defaultAvatar,
                 });
             })
@@ -65,13 +66,13 @@ export default function Profile() {
                         <i className="fa fa-envelope" /> <span>{user.email}</span>
                     </div>
                     <div className="social-row">
-                        <i className="fa fa-instagram" /> <span>{user.instagram}</span>
+                        <i className="fab fa-instagram" /> <span>{user.instagram}</span>
                     </div>
                     <div className="social-row">
-                        <i className="fa fa-twitter" /> <span>{user.twitter}</span>
+                        <i className="fab fa-twitter" /> <span>{user.twitter}</span>
                     </div>
                     <div className="social-row">
-                        <i className="fa fa-facebook" /> <span>{user.facebook}</span>
+                        <i className="fab fa-facebook" /> <span>{user.facebook}</span>
                     </div>
                 </div>
             </div>
@@ -104,6 +105,14 @@ export default function Profile() {
                     </div>
 
                     <div className="action-buttons">
+                        {user.role === 'laundry_owner' && (
+                            <button
+                                className="manage-btn"
+                                onClick={() => navigate('/managelaundry')}
+                            >
+                                Manage Laundry
+                            </button>
+                        )}
                         <button className="logout-btn" onClick={handleLogout}>Logout</button>
                     </div>
                 </div>
