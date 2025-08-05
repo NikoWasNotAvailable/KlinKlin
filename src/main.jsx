@@ -41,7 +41,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/laundrydetail/:id" element={<App />}>
           <Route index element={<LaundryDetail />} />
         </Route>
-        <Route path="/orderlaundry" element={<App />}>
+        <Route path="/orderlaundry/:id" element={<App />}>
           <Route index element={<OrderLaundry />} />
         </Route>
         <Route path="/profile" element={<App />}>

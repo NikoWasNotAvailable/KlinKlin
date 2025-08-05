@@ -88,3 +88,48 @@ select {
     border-radius: 4px;
     cursor: pointer;
 }
+
+.laundry-info-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Kolom form dan gambar bagi ruang sama */
+.laundry-form-fields,
+.laundry-image-upload {
+    flex: 1;
+}
+
+/* Gambar lebih besar dan proporsional */
+.image-upload-label {
+    display: block;
+    width: 60%;
+    /* isi penuh kolom */
+    max-width: 300px;
+    /* biar besar tapi tetap responsif */
+    aspect-ratio: 1/1;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    background: #f9f9f9;
+    margin: 0 auto;
+    /* center di kolomnya */
+}
+
+.image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 16px;
+    color: #888;
+    text-align: center;
+}
+
+.preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

@@ -2,7 +2,7 @@ import './LaundryDetail.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import reviewer1 from '../assets/profile.png';
-import laundryImg from '../assets/image1.jpg'; // placeholder image
+import defaultImage from '../assets/image1.jpg'; // fallback image
 
 export default function LaundryDetail() {
     const { id } = useParams();
@@ -14,7 +14,14 @@ export default function LaundryDetail() {
             try {
                 const res = await fetch(`http://localhost:3000/api/laundries/${id}`);
                 const data = await res.json();
-                setLaundry(data);
+
+                // ✅ Add imageUrl property for Base64 or fallback
+                setLaundry({
+                    ...data,
+                    imageUrl: data.image
+                        ? `data:image/jpeg;base64,${data.image}`
+                        : defaultImage
+                });
             } catch (err) {
                 console.error('Failed to fetch laundry detail:', err);
             }
@@ -24,7 +31,7 @@ export default function LaundryDetail() {
     }, [id]);
 
     const handleOrderClick = () => {
-        navigate(`/orderlaundry?laundryId=${id}`);
+        navigate(`/orderlaundry/${id}`);
     };
 
     if (!laundry) return <div>Loading...</div>;
@@ -33,14 +40,16 @@ export default function LaundryDetail() {
         <div className="laundry-detail">
             <div className="top-content">
                 <div className="main-image-box">
-                    <img src={laundryImg} alt="Laundry" className="main-image" />
+                    <img src={laundry.imageUrl} alt="Laundry" className="main-image" />
                 </div>
                 <div className="laundry-info">
                     <h2>{laundry.name}</h2>
                     <div className="stars">
                         ⭐⭐⭐⭐⭐ <span className="rating-text">{laundry.rating} | Lihat Ulasan</span>
                     </div>
-                    <button className="order-button" onClick={handleOrderClick}>Pesan Sekarang</button>
+                    <button className="order-button" onClick={handleOrderClick}>
+                        Pesan Sekarang
+                    </button>
                     <div className="map-box">
                         <div className="map-img">
                             <iframe

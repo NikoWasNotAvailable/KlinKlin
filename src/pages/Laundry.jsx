@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Laundry.css';
-import defaultImage from '../assets/home.png'; // fallback image if needed
+import defaultImage from '../assets/home.png'; // fallback image
 
 export default function Laundry() {
   const navigate = useNavigate();
   const [laundryPlaces, setLaundryPlaces] = useState([]);
 
   const handleCardClick = (id) => {
-    navigate(`/laundrydetail/${id}`); // updated to use dynamic ID if needed
+    navigate(`/laundrydetail/${id}`);
   };
 
   useEffect(() => {
@@ -16,13 +16,23 @@ export default function Laundry() {
       try {
         const token = localStorage.getItem('token');
 
-        const response = await fetch('http://localhost:3000/api/laundries ', {
+        const response = await fetch('http://localhost:3000/api/laundries', {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
+
         const data = await response.json();
-        setLaundryPlaces(data);
+
+        // ✅ Convert base64 from DB into proper image URL
+        const formattedData = data.map(place => ({
+          ...place,
+          imageUrl: place.image
+            ? `data:image/jpeg;base64,${place.image}`
+            : defaultImage
+        }));
+
+        setLaundryPlaces(formattedData);
       } catch (error) {
         console.error('Error fetching laundry places:', error);
       }
@@ -67,7 +77,7 @@ export default function Laundry() {
                     onClick={() => handleCardClick(place.id)}
                     style={{ cursor: 'pointer' }}
                   >
-                    <img src={defaultImage} alt={place.name} />
+                    <img src={place.imageUrl} alt={place.name} />
                     <h3>{place.name}</h3>
                     <p>{place.description}</p>
                     <p>⭐ {place.rating ?? '4.0'} / 5</p>

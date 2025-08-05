@@ -20,22 +20,30 @@ router.get('/', async (req, res) => {
   const pool = getPool();
   try {
     const [laundries] = await pool.query(`
-            SELECT 
-                l.id,
-                l.name,
-                l.description,
-                l.rating,
-                l.address,
-                l.latitude,
-                l.longitude,
-                u.id AS owner_id,
-                u.username AS owner_username,
-                u.first_name,
-                u.last_name
-            FROM laundry_places l
-            JOIN users u ON l.owner_id = u.id
-        `);
-    res.json(laundries);
+      SELECT 
+        l.id,
+        l.name,
+        l.description,
+        l.rating,
+        l.address,
+        l.latitude,
+        l.longitude,
+        l.image,
+        u.id AS owner_id,
+        u.username AS owner_username,
+        u.first_name,
+        u.last_name
+      FROM laundry_places l
+      JOIN users u ON l.owner_id = u.id
+    `);
+
+    // Convert image buffer to base64
+    const formatted = laundries.map(l => ({
+      ...l,
+      image: l.image ? l.image.toString('base64') : null
+    }));
+
+    res.json(formatted);
   } catch (err) {
     console.error('Error fetching laundries:', err);
     res.status(500).json({ error: 'Internal server error' });
@@ -62,12 +70,14 @@ router.get('/my-laundry', authenticateToken, async (req, res) => {
 
     const laundry = laundryRows[0];
 
-    // Fetch services for this laundry
+    // Convert image to base64
+    laundry.image = laundry.image ? laundry.image.toString('base64') : null;
+
+    // Fetch services
     const [services] = await pool.query(
       `SELECT * FROM services WHERE laundry_place_id = ?`,
       [laundry.id]
     );
-
     laundry.services = services;
 
     res.json(laundry);
@@ -85,10 +95,20 @@ router.post('/my-laundry', authenticateToken, async (req, res) => {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
-  const { name, description, address, latitude, longitude, services } = req.body;
+  let { name, description, address, latitude, longitude, services, image } = req.body;
 
   if (!Array.isArray(services) || services.length === 0) {
     return res.status(400).json({ error: 'Services are required' });
+  }
+
+  // Convert base64 to buffer if present
+  let imageBuffer = null;
+  if (image) {
+    try {
+      imageBuffer = Buffer.from(image, 'base64');
+    } catch {
+      return res.status(400).json({ error: 'Invalid image format' });
+    }
   }
 
   const conn = await pool.getConnection();
@@ -108,32 +128,41 @@ router.post('/my-laundry', authenticateToken, async (req, res) => {
       laundryId = existing[0].id;
       await conn.query(
         `UPDATE laundry_places 
-                 SET name = ?, description = ?, address = ?, latitude = ?, longitude = ? 
-                 WHERE owner_id = ?`,
-        [name, description, address, latitude, longitude, req.user.userId]
+         SET name = ?, description = ?, address = ?, latitude = ?, longitude = ?, image = ?
+         WHERE owner_id = ?`,
+        [name, description, address, latitude, longitude, imageBuffer, req.user.userId]
       );
 
-      // Remove old services
+      // Remove related order_items first
+      await conn.query(`
+        DELETE oi
+        FROM order_items oi
+        JOIN services s ON oi.service_id = s.id
+        WHERE s.laundry_place_id = ?
+      `, [laundryId]);
+
+      // Then remove old services
       await conn.query(`DELETE FROM services WHERE laundry_place_id = ?`, [laundryId]);
     } else {
       // Insert new laundry
       const [result] = await conn.query(
-        `INSERT INTO laundry_places (name, description, owner_id, address, latitude, longitude, rating)
-                 VALUES (?, ?, ?, ?, ?, ?, 0)`,
-        [name, description, req.user.userId, address, latitude, longitude]
+        `INSERT INTO laundry_places (name, description, owner_id, address, latitude, longitude, rating, image)
+         VALUES (?, ?, ?, ?, ?, ?, 0, ?)`,
+        [name, description, req.user.userId, address, latitude, longitude, imageBuffer]
       );
       laundryId = result.insertId;
     }
 
-    // Insert services
+    // Insert services (force price to number)
     for (const svc of services) {
-      if (!svc.type || !svc.name || typeof svc.price !== 'number') {
+      const priceNum = Number(svc.price);
+      if (!svc.type || !svc.name || isNaN(priceNum)) {
         throw new Error('Invalid service data');
       }
       await conn.query(
         `INSERT INTO services (laundry_place_id, type, name, price)
-                 VALUES (?, ?, ?, ?)`,
-        [laundryId, svc.type, svc.name, svc.price]
+         VALUES (?, ?, ?, ?)`,
+        [laundryId, svc.type, svc.name, priceNum]
       );
     }
 
@@ -156,12 +185,10 @@ router.get('/:id', async (req, res) => {
 
   try {
     const [rows] = await pool.query(
-      `SELECT 
-                l.*, 
-                u.username AS owner_username 
-             FROM laundry_places l
-             JOIN users u ON l.owner_id = u.id
-             WHERE l.id = ?`,
+      `SELECT l.*, u.username AS owner_username 
+       FROM laundry_places l
+       JOIN users u ON l.owner_id = u.id
+       WHERE l.id = ?`,
       [id]
     );
 
@@ -169,7 +196,10 @@ router.get('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Laundry not found' });
     }
 
-    res.json(rows[0]);
+    const laundry = rows[0];
+    laundry.image = laundry.image ? laundry.image.toString('base64') : null;
+
+    res.json(laundry);
   } catch (err) {
     console.error('Error fetching laundry by ID:', err);
     res.status(500).json({ error: 'Internal server error' });

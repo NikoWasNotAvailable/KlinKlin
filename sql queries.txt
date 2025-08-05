@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS laundry_places (
   address TEXT,
   latitude DECIMAL(10, 6),
   longitude DECIMAL(10, 6),
+  image LONGBLOB,
   FOREIGN KEY (owner_id) REFERENCES users(id)
 );
 
@@ -91,9 +92,9 @@ VALUES
 ('cust1', 'password123', 'customer', 'Marvin', 'Santoso', '085612345678', 'Jl. Pelanggan 123', '1999-07-20', 'marvin@gmail.com');
 
 
-INSERT INTO laundry_places (name, description, rating, owner_id, address, latitude, longitude)
+INSERT INTO laundry_places (name, description, rating, owner_id, address, latitude, longitude, image)
 VALUES 
-('KlinKlin Laundry Express', 'Laundry cepat, bersih, dan wangi.', 4.7, 2, 'Jl. Meruya No.1', -6.200000, 106.800000);
+('KlinKlin Laundry Express', 'Laundry cepat, bersih, dan wangi.', 4.7, 2, 'Jl. Meruya No.1', -6.200000, 106.800000, 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
 
 -- Kiloan services
 INSERT INTO services (laundry_place_id, type, name, price) VALUES
@@ -154,13 +155,13 @@ VALUES
 ('owner6', 'password123', 'laundry_owner', 'Sari', 'Indah', '082134567896', 'Jl. Laundry No. 6', '1989-07-08', 'sari@laundry.com');
 
 -- 🧺 New Laundry Places
-INSERT INTO laundry_places (name, description, rating, owner_id, address, latitude, longitude)
+INSERT INTO laundry_places (name, description, rating, owner_id, address, latitude, longitude, image)
 VALUES
-('CuciCeria Laundry', 'Pelayanan ramah dan cepat.', 4.5, 4, 'Jl. Cuci Ceria No.2', -6.201000, 106.801000),
-('LaundryQ Bersih', 'Cucian harum dan higienis.', 4.6, 5, 'Jl. Bersih Sejahtera No.3', -6.202000, 106.802000),
-('ExpressWash', 'Cepat dan terpercaya.', 4.4, 6, 'Jl. Express No.4', -6.203000, 106.803000),
-('BersihPlus Laundry', 'Solusi cuci bersih untuk keluarga.', 4.8, 7, 'Jl. Bersih Banget No.5', -6.204000, 106.804000),
-('LaundryKita', 'Harga terjangkau, hasil maksimal.', 4.3, 8, 'Jl. Kita Bersih No.6', -6.205000, 106.805000);
+('CuciCeria Laundry', 'Pelayanan ramah dan cepat.', 4.5, 4, 'Jl. Cuci Ceria No.2', -6.201000, 106.801000, 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='),
+('LaundryQ Bersih', 'Cucian harum dan higienis.', 4.6, 5, 'Jl. Bersih Sejahtera No.3', -6.202000, 106.802000, 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='),
+('ExpressWash', 'Cepat dan terpercaya.', 4.4, 6, 'Jl. Express No.4', -6.203000, 106.803000, 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='),
+('BersihPlus Laundry', 'Solusi cuci bersih untuk keluarga.', 4.8, 7, 'Jl. Bersih Banget No.5', -6.204000, 106.804000, 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='),
+('LaundryKita', 'Harga terjangkau, hasil maksimal.', 4.3, 8, 'Jl. Kita Bersih No.6', -6.205000, 106.805000, 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
 
 -- 🧾 Services for each new laundry (laundry_place_id = 2..6)
 

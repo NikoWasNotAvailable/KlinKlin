@@ -10,6 +10,21 @@ export default function ManageLaundry() {
         latitude: 0,
         longitude: 0,
     });
+
+    const [imagePreview, setImagePreview] = useState(null);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+
     const [kiloanServices, setKiloanServices] = useState([{ name: '', price: '', type: 'kiloan' }]);
     const [satuanServices, setSatuanServices] = useState([{ name: '', price: '', type: 'satuan' }]);
     const [loading, setLoading] = useState(true);
@@ -36,6 +51,11 @@ export default function ManageLaundry() {
                         longitude: data.longitude || '',
                     });
 
+                    // ✅ Set image preview dari base64
+                    if (data.image) {
+                        setImagePreview(`data:image/jpeg;base64,${data.image}`);
+                    }
+
                     setKiloanServices(
                         data.services?.filter(s => s.type === 'kiloan')?.length
                             ? data.services.filter(s => s.type === 'kiloan')
@@ -52,6 +72,7 @@ export default function ManageLaundry() {
             })
             .catch(() => setLoading(false));
     }, [navigate]);
+
 
     const handleLaundryChange = e => {
         const { name, value } = e.target;
@@ -92,15 +113,21 @@ export default function ManageLaundry() {
 
         const token = localStorage.getItem('token');
 
-        // ✅ Ensure prices are numbers
         const formattedServices = [...kiloanServices, ...satuanServices].map(svc => ({
             ...svc,
             price: Number(svc.price) || 0
         }));
 
+        let imageBase64 = null;
+        if (imagePreview) {
+            // kalau preview ada, ambil base64-nya (tanpa prefix data:image/...;)
+            imageBase64 = imagePreview.split(',')[1];
+        }
+
         const payload = {
             ...laundry,
-            services: formattedServices
+            services: formattedServices,
+            image: imageBase64 // ✅ kirim base64 image
         };
 
         fetch('http://localhost:3000/api/laundries/my-laundry', {
@@ -123,6 +150,7 @@ export default function ManageLaundry() {
     };
 
 
+
     if (loading) return <div className="manage-laundry-container">Loading...</div>;
 
     return (
@@ -131,19 +159,43 @@ export default function ManageLaundry() {
 
             <div className="card">
                 <h2>🏠 Laundry Info</h2>
-                <div className="form-group">
-                    <label>Name</label>
-                    <input name="name" placeholder="Laundry name" value={laundry.name} onChange={handleLaundryChange} />
-                </div>
-                <div className="form-group">
-                    <label>Description</label>
-                    <textarea name="description" placeholder="Brief description" value={laundry.description} onChange={handleLaundryChange} />
-                </div>
-                <div className="form-group">
-                    <label>Address</label>
-                    <textarea name="address" placeholder="Full address" value={laundry.address} onChange={handleLaundryChange} />
+                <div className="laundry-info-row">
+                    {/* Left side: form fields */}
+                    <div className="laundry-form-fields">
+                        <div className="form-group">
+                            <label>Name</label>
+                            <input name="name" placeholder="Laundry name" value={laundry.name} onChange={handleLaundryChange} />
+                        </div>
+                        <div className="form-group">
+                            <label>Description</label>
+                            <textarea name="description" placeholder="Brief description" value={laundry.description} onChange={handleLaundryChange} />
+                        </div>
+                        <div className="form-group">
+                            <label>Address</label>
+                            <textarea name="address" placeholder="Full address" value={laundry.address} onChange={handleLaundryChange} />
+                        </div>
+                    </div>
+
+                    {/* Right side: image upload */}
+                    <div className="laundry-image-upload">
+                        <label htmlFor="imageUpload" className="image-upload-label">
+                            {imagePreview ? (
+                                <img src={imagePreview} alt="Laundry" className="preview-img" />
+                            ) : (
+                                <div className="image-placeholder">+ Add Image</div>
+                            )}
+                        </label>
+                        <input
+                            id="imageUpload"
+                            type="file"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            onChange={handleImageChange}
+                        />
+                    </div>
                 </div>
             </div>
+
 
             <div className="card">
                 <h2>⚖️ Kiloan Services</h2>

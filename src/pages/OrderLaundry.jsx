@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './OrderLaundry.css';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const OrderLaundry = () => {
   const navigate = useNavigate();
@@ -11,11 +11,12 @@ const OrderLaundry = () => {
   const [selectedSatuan, setSelectedSatuan] = useState({});
   const [tanggal, setTanggal] = useState('');
   const [jam, setJam] = useState('');
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchServices = async () => {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:3000/api/services?laundry_place_id=1', {
+      const res = await fetch(`http://localhost:3000/api/services?laundry_place_id=${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
