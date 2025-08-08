@@ -28,7 +28,7 @@
     flex-direction: column;
     align-items: center;
     padding: 2rem;
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     align-self: flex-start;
     height: fit-content;

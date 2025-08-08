@@ -65,7 +65,7 @@ export default function Profile() {
                     <div className="social-row">
                         <i className="fa fa-envelope" /> <span>{user.email}</span>
                     </div>
-                    <div className="social-row">
+                    {/* <div className="social-row">
                         <i className="fab fa-instagram" /> <span>{user.instagram}</span>
                     </div>
                     <div className="social-row">
@@ -73,7 +73,7 @@ export default function Profile() {
                     </div>
                     <div className="social-row">
                         <i className="fab fa-facebook" /> <span>{user.facebook}</span>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

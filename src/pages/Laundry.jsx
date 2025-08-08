@@ -58,8 +58,7 @@ export default function Laundry() {
             ></iframe>
           </div>
           <p>
-            <span>Alamat:</span> Jl. Lorem ipsum dolor sit amet consectetur, RT 06 RW 12,
-            Kelurahan Bojong Gede, Kecamatan Lamping, Kota Jakarta Barat, Indonesia
+            <span>Alamat:</span> Jalan Kebon Jeruk Raya No.27, RT.1/RW.9, Kebon Jeruk, Kb. Jeruk, Kota Jakarta Barat, DKI Jakarta.
           </p>
         </div>
 

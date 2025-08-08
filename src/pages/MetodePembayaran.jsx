@@ -31,6 +31,7 @@ const MetodePembayaran = () => {
         };
 
         fetchOrder();
+        setSelectedMethod('OVO');
     }, [id]);
 
     const handlePay = async () => {

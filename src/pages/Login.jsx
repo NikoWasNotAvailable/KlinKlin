@@ -70,7 +70,7 @@ export default function Login() {
           <h2>Please Login to wash</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-element">
-              <label>Email</label>
+              <label>Username</label>
               <input
                 type="text"
                 value={username}

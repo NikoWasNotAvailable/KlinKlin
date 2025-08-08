@@ -5,6 +5,7 @@ import profileIcon from '../assets/profile.png';
 import './Navbar.css';
 import { jwtDecode } from 'jwt-decode';
 
+
 function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ function Navbar() {
     location.pathname.startsWith('/owner/confirm');
 
   return (
-    <nav className={`navbar ${isWhiteBackground ? 'white-background' : ''}`}>
+    <nav className={"navbar"} >
       <div className="navbar-brand">
         <img src={logo} alt="Logo" className="logo-image" />
         <span className="brand-text">KlinKlin</span>

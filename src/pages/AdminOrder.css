@@ -89,7 +89,7 @@
 }
 
 .send-driver-btn:hover {
-    background-color: black;
+    background-color: rgb(136, 235, 136);
     color: white;
 }
 
@@ -115,4 +115,5 @@
     pointer-events: none;
     opacity: 0.5;
     cursor: not-allowed;
+    background-color: gray !important;
 }

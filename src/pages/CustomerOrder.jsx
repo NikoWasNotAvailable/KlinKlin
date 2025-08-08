@@ -58,7 +58,7 @@ const CustomerOrder = () => {
                             </div>
 
                             <button
-                                className="send-driver-btn"
+                                className={order.status !== 'received' ? "send-driver-btn.disabled" : "send-driver-btn"}
                                 onClick={() => handleGoToPayment(order.id)}
                                 disabled={order.status !== 'received'}
                             >

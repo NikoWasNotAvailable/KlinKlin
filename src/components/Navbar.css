@@ -4,11 +4,13 @@
   /* center nav links horizontally */
   align-items: center;
   /* center everything vertically */
-  position: relative;
+  position: fixed;
   padding: 2rem 0rem;
   height: 60px;
   width: 100%;
   box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
 }
 
 .navbar-brand {
